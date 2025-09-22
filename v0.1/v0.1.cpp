@@ -12,6 +12,10 @@ using std::vector;
 using std::setw;
 using std::left;
 using std::right;
+using std::setfill;
+using std::setprecision;
+using std::fixed;
+using std::string;
 
 struct Studentas {
     string vardas, pavarde;
@@ -30,8 +34,10 @@ int main()
         cout << "Iveskite " << j + 1 << " studenta: \n";
         grupe.push_back(ivesk());
     }
+    cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << endl;
+    cout << string(50, '-') << endl;
     for (auto temp :grupe)
-    cout << temp.vardas << " | " << temp.pavarde << " | " << temp.rez << endl;
+    cout << left << setw(15) << temp.vardas << setw(15) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << endl;
     return 0;
 }
 
