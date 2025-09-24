@@ -5,6 +5,8 @@
 #include <string>
 #include <algorithm>
 #include <random>
+#include <fstream>
+#include <sstream>
 
 using std::cout;
 using std::cin;
@@ -21,6 +23,10 @@ using std::sort;
 using std::uniform_int_distribution;
 using std::mt19937;
 using std::random_device;
+using std::ifstream;
+using std::ofstream;
+using std::stringstream;
+using std::cerr;
 
 struct Studentas {
     string vardas, pavarde;
@@ -32,14 +38,31 @@ struct Studentas {
 
 Studentas ivesk();
 void isvesk(const vector<Studentas>& grupe);
+void nuskaityk(const string& failas, vector<Studentas>& grupe);
+
 
 int main()
 {
     vector<Studentas> grupe;
-    for (int j = 0; j < 3; j++)
-    {
-        cout << "Iveskite " << j + 1 << " studenta: \n";
-        grupe.push_back(ivesk());
+    int x;
+    cout << "Jei norite duomenis ivesti ranka arba sugeneruoti atsitiktinai - iveskite 1, jei norite duomenis nuskaityti is failo - iveskite 2: "; cin >> x;
+    while (x != 1 && x != 2) {  // apsauga, kad butu ivedama 1 arba 2
+        cout << "Neteisinga ivestis. ";
+        cout << "Jei norite duomenis ivesti ranka arba sugeneruoti atsitiktinai - iveskite 1, jei norite duomenis nuskaityti is failo - iveskite 2: "; cin >> x;
+    }
+    if (x == 1) {
+        int stud;
+        cout << "Iveskite keleto studentu duomenis norite ivesti: "; cin >> stud;
+        for (int j = 0; j < stud; j++)
+        {
+            cout << "Iveskite " << j + 1 << " studenta: \n";
+            grupe.push_back(ivesk());
+        }
+    }
+    else if (x == 2) {
+        string failas;
+        cout << "Iveskite norimo nuskaityti failo pavadinima pavadinimas.txt formatu: "; cin >> failas;
+        nuskaityk(failas, grupe);
     }
     isvesk(grupe);
     return 0;
@@ -123,3 +146,34 @@ void isvesk(const vector<Studentas>& grupe) {
             cout << left << setw(15) << temp.vardas << setw(15) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
     }
 }
+
+void nuskaityk(const string& failas, vector<Studentas>& grupe) {
+    ifstream df(failas);
+    if (!df) {
+        cerr << "Klaida. Failas nerastas." << endl;
+        return;
+    }
+    string line;
+    Studentas laik;
+    int paz, n = 5;
+    getline(df, line);
+    while (getline(df, line)) {
+        int sum = 0;
+        laik.pazymiai.clear();
+        stringstream ss(line);
+        ss >> laik.vardas >> laik.pavarde;
+        for (int i = 0; i < 5; i++) {
+            ss >> paz;
+            laik.pazymiai.push_back(paz);
+            sum += paz;
+        }
+        ss >> laik.egzas;
+        laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // galutinio vidurkio apskaiciavimas
+        sort(laik.pazymiai.begin(), laik.pazymiai.end());
+        laik.mediana = laik.pazymiai[2];
+        grupe.push_back(laik);
+    }
+    df.close();
+}
+
+//irasyk()
