@@ -1,4 +1,4 @@
-
+﻿
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -61,7 +61,7 @@ int main()
     }
     else if (x == 2) {
         string failas;
-        cout << "Iveskite norimo nuskaityti failo pavadinima pavadinimas.txt formatu: "; cin >> failas;
+        cout << "Iveskite norimo nuskaityti failo pavadinima pavadinimas.txt formatu: "; cin >> failas; // naudotojas iveda norimo naudoti failo pavadinima
         nuskaityk(failas, grupe);
     }
     isvesk(grupe);
@@ -149,18 +149,18 @@ void isvesk(const vector<Studentas>& grupe) {
 
 void nuskaityk(const string& failas, vector<Studentas>& grupe) {
     ifstream df(failas);
-    if (!df) {
+    if (!df) {  // patikra ar norimas nuskaityti failas egzistuoja
         cerr << "Klaida. Failas nerastas." << endl;
         return;
     }
     string line;
     Studentas laik;
     int paz, n = 5;
-    getline(df, line);
-    while (getline(df, line)) {
+    getline(df, line);  // nuskaitoma pirmoji file'o eilutė, header'is
+    while (getline(df, line)) { // skaitomos visos likusios failo eilutės
         int sum = 0;
-        laik.pazymiai.clear();
-        stringstream ss(line);
+        laik.pazymiai.clear();  // pažymių vektoriaus išvalymas
+        stringstream ss(line); // nuskaityta eilutė padalinama į atskirus vertes, kurias nuskaitome atskirai
         ss >> laik.vardas >> laik.pavarde;
         for (int i = 0; i < 5; i++) {
             ss >> paz;
@@ -169,11 +169,9 @@ void nuskaityk(const string& failas, vector<Studentas>& grupe) {
         }
         ss >> laik.egzas;
         laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // galutinio vidurkio apskaiciavimas
-        sort(laik.pazymiai.begin(), laik.pazymiai.end());
-        laik.mediana = laik.pazymiai[2];
+        sort(laik.pazymiai.begin(), laik.pazymiai.end());   //
+        laik.mediana = laik.pazymiai[2];                    // medianos radimas
         grupe.push_back(laik);
     }
     df.close();
 }
-
-//irasyk()
