@@ -231,3 +231,4 @@ float mediana(vector<int>& pazymiai) {
     }
     else return (pazymiai[(nd / 2) - 1] + pazymiai[nd / 2]) / 2.0;
 }
+
