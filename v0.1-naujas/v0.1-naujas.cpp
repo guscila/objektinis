@@ -66,9 +66,9 @@ int main()
         }
     }
     else if (pasirinkimas == 2) {
-        cout << "Iveskite norimo nuskaityti failo pavadinima pavadinimas.txt formatu: ";
         nuskaityk(grupe);   // failo nuskaitymo funkcijos iškvietimas
         cout << string(50, '-') << endl;
+        cout << "Number of students read: " << grupe.size() << endl;
     }
     irasyk(grupe);  // failo įrašymo funkcijos iškvietimas
     return 0;
@@ -153,6 +153,7 @@ Studentas ivesk() {
             cout << "Neteisinga ivestis. Iveskite egzamino bala 1-10 skaleje: ";
             egzas = tikNr();    // teigiamo skaičiaus funkcijos iškvietimas
         }
+        laik.egzas = egzas;
     }
     else if (pasirinkimas == 2) {  // veiksmai, jei naudotojas pasirenka, kad duomenys būtų generuojami atsitiktinai
         int nd; // nd - studento pazymiu kiekis;
@@ -174,14 +175,36 @@ void nuskaityk(vector<Studentas>& grupe) {
     Studentas laik;
     ifstream df;
     string failas;
-    while (true) {  // veiksmai tikrinant ar naudotojo nurodytas failas atsidaro
-        cin >> failas;  // naudotojo įvedamas failo pavadinimas .txt formatu
-        df.open(failas);
-        if (!df) {
-            cerr << "Klaida. Jusu irasytas failas nerastas. Bandykite vel:  " << endl;
+    int ivestis;
+    cout << "Pasirinkite norima testuoti faila is saraso:\n";
+    cout << "1 - 'kursiokai.txt'\n";
+    cout << "2 - 'studentai10000.txt'\n";
+    cout << "3 - 'studentai100000.txt'\n";
+    cout << "4 - 'studentai1000000.txt'\n";
+    while (true) {
+        ivestis = tikNr();
+        if (ivestis == 1) {
+            failas = "kursiokai.txt";
+            break;
         }
-        else break;
+        else if (ivestis == 2) {
+            failas = "C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\studentai10000.txt";
+            break;
+        }
+        else if (ivestis == 3) {
+            failas = "C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\studentai100000.txt";
+            break;
+        }
+        else if (ivestis == 4) {
+            failas = "C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\studentai1000000.txt";
+            break;
+        }
+        else {
+            cin.clear();
+            cout << "Neteisinga ivestis. Bandykite vel: "; cin >> ivestis;
+        }
     }
+    df.open(failas);
     string line, word;  // line - nuskaitoma failo eilutė; word - objektai į kuriuos suskirstoma eilutė
     getline(df, line);  // nuskaitoma pirmoji file'o eilutė, header'is
     stringstream ss(line);  // nuskaityta eilutė padalinama į word objektus
