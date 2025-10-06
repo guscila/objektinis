@@ -8,6 +8,10 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
+#include <stdlib.h>
+#include <stdio.h>
+#include <chrono>
+
 
 using std::cout;
 using std::cin;
@@ -173,8 +177,9 @@ Studentas ivesk() {
 
 void nuskaityk(vector<Studentas>& grupe) {
     Studentas laik;
-    ifstream df;
-    string failas;
+    vector<std::string> splited;
+    string failas, eil;
+    stringstream my_buffer;
     int ivestis;
     cout << "Pasirinkite norima testuoti faila is saraso:\n";
     cout << "1 - 'kursiokai.txt'\n";
@@ -204,20 +209,29 @@ void nuskaityk(vector<Studentas>& grupe) {
             cout << "Neteisinga ivestis. Bandykite vel: "; cin >> ivestis;
         }
     }
+    ifstream df(failas);
+    my_buffer << df.rdbuf();
     df.open(failas);
+    df.close();
+    while (my_buffer) {
+        if (!my_buffer.eof()) {
+            getline(my_buffer, eil);
+            splited.push_back(eil);
+        }
+        else break;
+    }
     string line, word;  // line - nuskaitoma failo eilutė; word - objektai į kuriuos suskirstoma eilutė
-    getline(df, line);  // nuskaitoma pirmoji file'o eilutė, header'is
-    stringstream ss(line);  // nuskaityta eilutė padalinama į word objektus
+    stringstream ss(splited[0]);  // nuskaityta eilutė padalinama į word objektus
     ss >> word >> word; // nuskaitomi failo header'io pirmi du žodžiai (vardas, pavardė)
     int nd = 0; // nd - studento pažymių kiekis;
     while (ss >> word) {    // veiksmai skaičiuojant kiek namų darbų (ND) pažymių yra faile pagal header eilutę
         if (word.find("ND") != string::npos) nd++;
         else if (word == "Egz.") break;
     }
-    while (getline(df, line)) { // nuskaitomos visos likusios failo eilutės
+    for (int j = 1; j < splited.size(); j++) {
         int sum = 0, paz;   // sum - studento pažymių suma; paz - įvedamas pažymys 
         laik.pazymiai.clear();  // pažymių vektoriaus išvalymas
-        stringstream ss(line); // nuskaityta eilutė padalinama į word objektus
+        stringstream ss(splited[j]);
         ss >> laik.vardas >> laik.pavarde;  // nuskaitomi studento vardas ir pavardė
         for (int i = 0; i < nd; i++) {  // nuskaitomi namų darbų pažymiai
             ss >> paz;
@@ -229,7 +243,6 @@ void nuskaityk(vector<Studentas>& grupe) {
         laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
         grupe.push_back(laik);  // studento duomenų įdėjimas į vektorių
     }
-    df.close();
 }
 
 void irasyk(vector<Studentas>& grupe) {
