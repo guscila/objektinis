@@ -40,22 +40,27 @@ struct Studentas {  // studento struktūra
     int egzas;
     float rez;
     float mediana;
+    string kategorija;
 };
 
 int meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
 int tikNr();    // funkcija patikrai, kad įvestis yra skaičius didesnis už 0
 Studentas ivesk();  // studentų įvesties fukcija
-void NuskaitymasIsFailo(vector<Studentas>& grupe);   // funkcija duomenų nuskaitymui iš failo
-void IsvedimasIFaila(vector<Studentas>& grupe);  // funkcija rezultatų išvedimui į failą
+void NuskaitymasIsFailo(vector<Studentas>& grupe, string name);   // funkcija duomenų nuskaitymui iš failo
+void IsvedimasIFaila(vector<Studentas>& grupe, string name);  // funkcija rezultatų išvedimui į failą
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
-void FailuGeneravimas();
+void FailuGeneravimas(string name);
+void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);
 
 
 int main()
 {
     vector<Studentas> grupe;
+    vector<Studentas> vargsiukai;
+    vector<Studentas> kietiakai;
     int pasirinkimas;
+    string name;
     pasirinkimas = meniu(); // meniu funkcijos iškvietimas
     if (pasirinkimas == 1) {
         int stud;
@@ -69,18 +74,27 @@ int main()
         }
     }
     else if (pasirinkimas == 2) {
-        NuskaitymasIsFailo(grupe);   // failo nuskaitymo funkcijos iškvietimas
+        cout << "Iveskite failo pavadinima, kuri norime nuskaityti:\n";
+        cin >> name;
+        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
         cout << string(50, '-') << endl;
     }
     else if (pasirinkimas == 3) {
-        FailuGeneravimas();
+        cout << "Iveskite failo pavadinima, kuri norite sugeneruoti:\n";
+        cin >> name;
+        cout << string(50, '-') << endl;
+        FailuGeneravimas(name);
+        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
+        StudentuRusiavimas(grupe, vargsiukai, kietiakai);
+        IsvedimasIFaila(vargsiukai, "Vargsiukai");
+        IsvedimasIFaila(kietiakai, "Kietiakai");
         return 0;
     }
     else {
         cout << "Klaida. ";
         pasirinkimas = tikNr();
     }
-    IsvedimasIFaila(grupe);  // failo įrašymo funkcijos iškvietimas
+    IsvedimasIFaila(grupe, "rezultatai");  // failo įrašymo funkcijos iškvietimas
     return 0;
 }
 
@@ -90,6 +104,7 @@ int meniu() {
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
     cout << "3 - sugeneruoti studentu duomenis i failus:\n";
+    cout << "Iveskite savo pasirinkima: ";
     while (true) {
         ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
         if (ivestis > 3) cout << "Neteisinga ivestis. Bandykite vel: ";
@@ -186,42 +201,14 @@ Studentas ivesk() {
     return laik;
 }
 
-void NuskaitymasIsFailo(vector<Studentas>& grupe) {
+void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
     Studentas laik;
-    string failas;
-    int ivestis;
-    cout << "Pasirinkite norima testuoti faila is saraso:\n";
-    cout << "1 - 'kursiokai.txt'\n";
-    cout << "2 - 'studentai10000.txt'\n";
-    cout << "3 - 'studentai100000.txt'\n";
-    cout << "4 - 'studentai1000000.txt'\n";
-    while (true) {
-        ivestis = tikNr();
-        if (ivestis == 1) {
-            failas = "kursiokai.txt";
-            break;
-        }
-        else if (ivestis == 2) {
-            failas = "C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\studentai10000.txt";
-            break;
-        }
-        else if (ivestis == 3) {
-            failas = "C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\studentai100000.txt";
-            break;
-        }
-        else if (ivestis == 4) {
-            failas = "C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\studentai1000000.txt";
-            break;
-        }
-        else {
-            cin.clear();
-            cout << "Neteisinga ivestis. Bandykite vel: ";
-        }
-    }
+    string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     ifstream df(failas);
     if (!df) {
-        cout << "Ivyko klaida atidarant faila." << endl;
-        return;
+        cout << string(50, '-') << endl;
+        cout << "Ivyko klaida atidarant faila arba failas neegzistuoja.\n";
+        exit(0);
     }
     string line, word;  // line - nuskaitoma failo eilutė; word - objektai į kuriuos suskirstoma eilutė
     getline(df, line);
@@ -249,22 +236,29 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe) {
             laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // studento galutinio vidurkio apskaičiavimas
         }
         laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
+        if (laik.rez < 5) {
+            laik.kategorija = "vargsiukas";
+        }
+        else if (laik.rez>=5) {
+            laik.kategorija = "kietiakas";
+        }
         grupe.push_back(laik);  // studento duomenų įdėjimas į vektorių
     }
     df.close();
+    cout << "Failas '" + name + ".txt' sekmingai nuskaitytas.\n";
 }
 
-void IsvedimasIFaila(vector<Studentas>& grupe) {
-    ofstream rf("rezultatai.txt");
+void IsvedimasIFaila(vector<Studentas>& grupe, string name) {
+    string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
+    ofstream rf(failas);
     sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
         return stud1.vardas < stud2.vardas;
         });
     rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
-    rf << string(70, '-') << endl;
     for (auto temp : grupe) // studentų duomenų įrašymas į failą
         rf << left << setw(15) << temp.vardas << setw(15) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
     rf.close();
-    cout << "Rezultatai sekmingai irasyti i faila rezultatai.txt" << endl;
+    cout << "Rezultatai sekmingai irasyti i faila '" << name << ".txt' aplanke 'testavimo failai'." << endl;
 }
 
 float mediana(vector<int>& pazymiai) {
@@ -277,23 +271,24 @@ float mediana(vector<int>& pazymiai) {
     else return (pazymiai[(nd / 2) - 1] + pazymiai[nd / 2]) / 2.0;
 }
 
-void FailuGeneravimas (){
+void FailuGeneravimas (string name){
     random_device rd;   //
     mt19937 gen(rd());  // "random" engine kodas
     uniform_int_distribution<> dist(1, 10); // random funkcijos algoritmo ribos (1-10)
+    string failas;
     int ivestis, nd;
+    failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     cout << "Keleto studentu duomenis norite sugeneruoti?:\n";
     ivestis = tikNr();
     cout << string(50, '-') << endl;
     cout << "Iveskite kiek norite sugeneruoti namu darbu pazymiu vienam studentui:\n";
     nd = tikNr();
-    ofstream rf("C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\generuoti testavimo failai\\testas.txt");
+    ofstream rf(failas);
     rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
     for (int i = 0; i < nd; i++) {
         rf << setw(2) << left << "ND" << setw(3) << left << i + 1;
     }
     rf << setw(6) << "Egz." << endl;
-    rf << string((5*(nd+1)+30), '-') << endl;
     for (int i = 0; i < ivestis; i++) {
         rf << setw(6) << left << "Vardas" << setw(9) << left << i+1 << setw(7) << left << "Pavarde" << setw(8) << left << i+1;
         for (int j = 0; j < nd+1; j++) {
@@ -303,6 +298,16 @@ void FailuGeneravimas (){
     }
     rf.close();
     cout << string(50, '-') << endl;
-    cout << "Failas sugeneruotas aplanke 'testavimo failai'.\n";
+    cout << "Failas '" << name << ".txt' sekmingai sugeneruotas aplanke 'testavimo failai'.\n";
 }
 
+void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
+    for (auto temp : grupe) {
+        if (temp.kategorija == "vargsiukas") {
+            vargsiukai.push_back(temp);
+        }
+        else if (temp.kategorija == "kietiakas") {
+            kietiakai.push_back(temp);
+        }
+    }
+}

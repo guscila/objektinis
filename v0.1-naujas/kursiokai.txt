@@ -1,9 +1,0 @@
-Vardas	Pavarde	ND1	ND2	ND3	ND4	ND5	Egzaminas
-Girius	Uscila	8	7	9	6	8	9
-Ugnius	Uscila	8	8	9	9	5	8
-Jurgita Juchneviciute	9	9	10	9	8	10
-Brigita	Blazeviciute	8	8	9	7	8	8
-Agne	Chomiciute	10	10	10	9	10	9
-Domas	Vakaris	8	7	6	9	5	8
-Rokas	Varanavicius	9	8	9	8	9	10
-Ignas Varanavicius	10	10	10	10	10	10
