@@ -1,102 +1,4 @@
-﻿
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <random>
-#include <fstream>
-#include <sstream>
-#include <limits>
-#include <chrono>
-
-
-using std::cout;
-using std::cin;
-using std::endl;
-using std::string;
-using std::vector;
-using std::setw;
-using std::left;
-using std::right;
-using std::setfill;
-using std::setprecision;
-using std::fixed;
-using std::sort;
-using std::uniform_int_distribution;
-using std::mt19937;
-using std::random_device;
-using std::ifstream;
-using std::ofstream;
-using std::getline;
-using std::stringstream;
-using std::cerr;
-using std::numeric_limits;
-using std::streamsize;
-
-struct Studentas {  // studento struktūra
-    string vardas, pavarde;
-    vector<int> pazymiai;
-    int egzas;
-    float rez;
-    float mediana;
-    string kategorija;
-};
-
-int meniu();    // meniu funkcija
-int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
-int tikNr();    // funkcija patikrai, kad įvestis yra skaičius didesnis už 0
-Studentas ivesk();  // studentų įvesties fukcija
-void NuskaitymasIsFailo(vector<Studentas>& grupe, string name);   // funkcija duomenų nuskaitymui iš failo
-void IsvedimasIFaila(vector<Studentas>& grupe, string name);  // funkcija rezultatų išvedimui į failą
-float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
-void FailuGeneravimas(string name);
-void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);
-
-
-int main()
-{
-    vector<Studentas> grupe;
-    vector<Studentas> vargsiukai;
-    vector<Studentas> kietiakai;
-    int pasirinkimas;
-    string name;
-    pasirinkimas = meniu(); // meniu funkcijos iškvietimas
-    if (pasirinkimas == 1) {
-        int stud;
-        cout << "Iveskite keleto studentu duomenis norite ivesti: ";
-        stud = tikNr(); // teigiamo skaičiaus funkcijos iškvietimas
-        for (int j = 0; j < stud; j++)
-        {
-            cout << "Iveskite " << j + 1 << " studenta: \n";
-            grupe.push_back(ivesk());   // studento duomenų įvesties funkcijos iškvietimas
-            cout << string(50, '-') << endl;
-        }
-    }
-    else if (pasirinkimas == 2) {
-        cout << "Iveskite failo pavadinima, kuri norime nuskaityti:\n";
-        cin >> name;
-        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
-        cout << string(50, '-') << endl;
-    }
-    else if (pasirinkimas == 3) {
-        cout << "Iveskite failo pavadinima, kuri norite sugeneruoti:\n";
-        cin >> name;
-        cout << string(50, '-') << endl;
-        FailuGeneravimas(name);
-        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
-        StudentuRusiavimas(grupe, vargsiukai, kietiakai);
-        IsvedimasIFaila(vargsiukai, "Vargsiukai");
-        IsvedimasIFaila(kietiakai, "Kietiakai");
-        return 0;
-    }
-    else {
-        cout << "Klaida. ";
-        pasirinkimas = tikNr();
-    }
-    IsvedimasIFaila(grupe, "rezultatai");  // failo įrašymo funkcijos iškvietimas
-    return 0;
-}
+﻿#include "funkcijos.h"
 
 int meniu() {
     int ivestis;
@@ -214,7 +116,7 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
     getline(df, line);
     int nd = 0; // nd - studento pažymių kiekis;
     size_t pos = 0;
-    while ((pos = line.find("ND", pos)) !=string::npos) {    // veiksmai skaičiuojant kiek namų darbų (ND) pažymių yra faile pagal header eilutę
+    while ((pos = line.find("ND", pos)) != string::npos) {    // veiksmai skaičiuojant kiek namų darbų (ND) pažymių yra faile pagal header eilutę
         nd++;
         pos += 2;
     }
@@ -239,7 +141,7 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
         if (laik.rez < 5) {
             laik.kategorija = "vargsiukas";
         }
-        else if (laik.rez>=5) {
+        else if (laik.rez >= 5) {
             laik.kategorija = "kietiakas";
         }
         grupe.push_back(laik);  // studento duomenų įdėjimas į vektorių
@@ -271,7 +173,7 @@ float mediana(vector<int>& pazymiai) {
     else return (pazymiai[(nd / 2) - 1] + pazymiai[nd / 2]) / 2.0;
 }
 
-void FailuGeneravimas (string name){
+void FailuGeneravimas(string name) {
     random_device rd;   //
     mt19937 gen(rd());  // "random" engine kodas
     uniform_int_distribution<> dist(1, 10); // random funkcijos algoritmo ribos (1-10)
@@ -290,8 +192,8 @@ void FailuGeneravimas (string name){
     }
     rf << setw(6) << "Egz." << endl;
     for (int i = 0; i < ivestis; i++) {
-        rf << setw(6) << left << "Vardas" << setw(9) << left << i+1 << setw(7) << left << "Pavarde" << setw(8) << left << i+1;
-        for (int j = 0; j < nd+1; j++) {
+        rf << setw(6) << left << "Vardas" << setw(9) << left << i + 1 << setw(7) << left << "Pavarde" << setw(8) << left << i + 1;
+        for (int j = 0; j < nd + 1; j++) {
             rf << setw(5) << dist(gen);
         }
         rf << endl;
