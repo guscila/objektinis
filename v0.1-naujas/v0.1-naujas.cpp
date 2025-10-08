@@ -8,8 +8,6 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
-#include <stdlib.h>
-#include <stdio.h>
 #include <chrono>
 
 
@@ -48,9 +46,10 @@ int meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
 int tikNr();    // funkcija patikrai, kad įvestis yra skaičius didesnis už 0
 Studentas ivesk();  // studentų įvesties fukcija
-void nuskaityk(vector<Studentas>& grupe);   // funkcija duomenų nuskaitymui iš failo
-void irasyk(vector<Studentas>& grupe);  // funkcija rezultatų išvedimui į failą
+void NuskaitymasIsFailo(vector<Studentas>& grupe);   // funkcija duomenų nuskaitymui iš failo
+void IsvedimasIFaila(vector<Studentas>& grupe);  // funkcija rezultatų išvedimui į failą
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
+void FailuGeneravimas();
 
 
 int main()
@@ -70,10 +69,18 @@ int main()
         }
     }
     else if (pasirinkimas == 2) {
-        nuskaityk(grupe);   // failo nuskaitymo funkcijos iškvietimas
+        NuskaitymasIsFailo(grupe);   // failo nuskaitymo funkcijos iškvietimas
         cout << string(50, '-') << endl;
     }
-    irasyk(grupe);  // failo įrašymo funkcijos iškvietimas
+    else if (pasirinkimas == 3) {
+        FailuGeneravimas();
+        return 0;
+    }
+    else {
+        cout << "Klaida. ";
+        pasirinkimas = tikNr();
+    }
+    IsvedimasIFaila(grupe);  // failo įrašymo funkcijos iškvietimas
     return 0;
 }
 
@@ -82,7 +89,12 @@ int meniu() {
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
-    ivestis = VienasDu(); // įvesties patikros (1 arba 2) funkcijos iškvietimas
+    cout << "3 - sugeneruoti studentu duomenis i failus:\n";
+    while (true) {
+        ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
+        if (ivestis > 3) cout << "Neteisinga ivestis. Bandykite vel: ";
+        else break;
+    }
     cout << string(50, '-') << endl;
     return ivestis;
 }
@@ -174,7 +186,7 @@ Studentas ivesk() {
     return laik;
 }
 
-void nuskaityk(vector<Studentas>& grupe) {
+void NuskaitymasIsFailo(vector<Studentas>& grupe) {
     Studentas laik;
     string failas;
     int ivestis;
@@ -242,7 +254,7 @@ void nuskaityk(vector<Studentas>& grupe) {
     df.close();
 }
 
-void irasyk(vector<Studentas>& grupe) {
+void IsvedimasIFaila(vector<Studentas>& grupe) {
     ofstream rf("rezultatai.txt");
     sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
         return stud1.vardas < stud2.vardas;
@@ -263,5 +275,34 @@ float mediana(vector<int>& pazymiai) {
         return pazymiai[nd / 2];
     }
     else return (pazymiai[(nd / 2) - 1] + pazymiai[nd / 2]) / 2.0;
+}
+
+void FailuGeneravimas (){
+    random_device rd;   //
+    mt19937 gen(rd());  // "random" engine kodas
+    uniform_int_distribution<> dist(1, 10); // random funkcijos algoritmo ribos (1-10)
+    int ivestis, nd;
+    cout << "Keleto studentu duomenis norite sugeneruoti?:\n";
+    ivestis = tikNr();
+    cout << string(50, '-') << endl;
+    cout << "Iveskite kiek norite sugeneruoti namu darbu pazymiu vienam studentui:\n";
+    nd = tikNr();
+    ofstream rf("C:\\Users\\ugiri\\Desktop\\uni\\MIF\\Obj. programavimas\\testavimo failai\\generuoti testavimo failai\\testas.txt");
+    rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
+    for (int i = 0; i < nd; i++) {
+        rf << setw(2) << left << "ND" << setw(3) << left << i + 1;
+    }
+    rf << setw(6) << "Egz." << endl;
+    rf << string((5*(nd+1)+30), '-') << endl;
+    for (int i = 0; i < ivestis; i++) {
+        rf << setw(6) << left << "Vardas" << setw(9) << left << i+1 << setw(7) << left << "Pavarde" << setw(8) << left << i+1;
+        for (int j = 0; j < nd+1; j++) {
+            rf << setw(5) << dist(gen);
+        }
+        rf << endl;
+    }
+    rf.close();
+    cout << string(50, '-') << endl;
+    cout << "Failas sugeneruotas aplanke 'testavimo failai'.\n";
 }
 
