@@ -25,16 +25,21 @@ Jonas / Jonaitis / 7.80 / 8.00 <br>
   * "100000studentu.txt" - 100 tūkst. studentų <br>
   * "1000000studentu.txt" - 1 mln. studentų <br>
   * "10000000studentu.txt" - 10 mln. studentų <br>
-## Greičio spartos analizė
-| Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | Išvedimas į failus |
-|:-----------------------|:----------------|:--------------------|:------------------------|:-------------------|
-| studentai10000.txt     | -               | 0.062 s             | 0.003 s                 | 0.044 s            |
-| studentai100000.txt    | -               | 0.66 s              | 0.035 s                 | 0.427 s            |
-| studentai1000000.txt   | -               | 3.295 s             | 0.326 s                 | 4.114 s            |
-| kursiokai.txt          | -               | 0.002 s             | 0.00001 s               | 0.004 s            |
-|                        |                 |                     |                         |                    |
-| 1000studentu.txt       | 0.011 s         | 0.004 s             | 0.0002 s                | 0.006 s            |
-| 10000studentu.txt      | 0.043 s         | 0.039 s             | 0.005 s                 | 0.093 s            |
-| 100000studentu.txt     | 0.435 s         | 0.269 s             | 0.055 s                 | 0.413 s            |
-| 1000000studentu.txt    | 4.323 s         | 2.296 s             | 0.28 s                  | 4.104 s            |
-| 10000000studentu.txt   | 42.89 s         | 24.07 s             | 7.603 s                 | 59.189 s           |
+## Greičio spartos analizė:
+| Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | Išvedimas į failą (*'Kietiakai'* (rez>=5))  | Išvedimas į failą (*'Vargšiukai'* (rez<5)) |
+|:-----------------------|:----------------|:--------------------|:------------------------|:----------------------------|:-----------------------------------------------------------|
+| studentai10000.txt     | -               | 0.058 s             | 0.003 s                 | 0.026 s                     | 0.019 s                                                    |
+| studentai100000.txt    | -               | 0.656 s             | 0.03 s                  | 0.22 s                      | 0.155 s                                                    |
+| studentai1000000.txt   | -               | 3.525 s             | 0.266 s                 | 2.241 s                     | 1.519 s                                                    |
+| kursiokai.txt          | -               | 0.001 s             | 0.00002 s               | 0.001 s                     | 0.002 s                                                    |
+|                        |                 |                     |                         |                             |                                                            |
+| 1000studentu.txt       | 0.011 s         | 0.004 s             | 0.0003 s                | 0.004 s                     | 0.004 s                                                    |
+| 10000studentu.txt      | 0.043 s         | 0.025 s             | 0.002 s                 | 0.025 s                     | 0.019 s                                                    |
+| 100000studentu.txt     | 0.435 s         | 0.294 s             | 0.032 s                 | 0.218 s                     | 0.15 s                                                     |
+| 1000000studentu.txt    | 4.323 s         | 2.433 s             | 0.321 s                 | 2.221 s                     | 1.5 s                                                      |
+| 10000000studentu.txt   | 42.89 s         | 23.903 s            | 6.856 s                 | 22.169 s                    | 16.193 s                                                   |
+
+##### Komentaras:
+```
+Greičio spartos analizės lentelėje pateikti 3 testavimų laikų vidurkiai.
+```
