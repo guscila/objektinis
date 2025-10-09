@@ -1,32 +1,40 @@
-# v0.1
+# v0.2
 
-## Programos aprašymas
-Programa leidžia naudotojui apskaičiuoti studentų galutinius balus pagal formulę ( *pav.1* ) ir pagal studento namų darbų medianą ( *code.1* ). Duomenis galima įvesti ranka, sugeneruoti atsitiktinai, arba nuskaityti iš failo. Galutiniai rezultatai yra išvedami į failą *"rezultatai.txt"*. <br>
-<br>
-*Pav.1:* <br> ![pav.1](https://latex.codecogs.com/svg.image?&space;Galutinis=0.4*vidurkis&plus;0.6*egzaminas)<br>
-*Code.1:*
-```c++
-vector<int>& pazymiai;
-int nd;
-sort(pazymiai.begin(), pazymiai.end()); // studento namų darbų pažymių vektoriaus surūšiavimas didėjimo tvarka
-nd = pazymiai.size();
-if (nd % 2 == 1) {   // veiksmai ieškant vektoriaus medianos
-    return pazymiai[nd / 2];
-}
-else return (pazymiai[(nd / 2) - 1] + pazymiai[nd / 2]) / 2.0;
-```
+## Versijos aprašymas
+Versija [v0.1](https://github.com/guscila/objektinis/tree/v0.1-nauja) papildyta funkcija leidžiančia naudotojui sugeneruoti studentų duomenų failus pagal žemiau pateiktą šabloną ( *žr. 'Programos įvesties/generavimo failų formatas'* ). Taip pat, programa papildyta failų spartos analizės funkcija leidžiančia testuoti failus bei sužinoti jų nuskaitymo, duomenų rūšiavimo bei išvedimo į failus spartas. Galiausiai, programoje atliktas refactoring'as - struktūros bei funkcijos perkeltos į atskirus failus; sutvarkytas meniu; funkcijoms suteikti aiškesni pavadinimai. <br>
 ## Programos failai:
-### Programos įvesties failų formatas:
+### Programos įvesties/generavimo failų formatas:
 Vardas1 / Pavarde1 / ND1 / ND2 / ... / Egz. <br>
 Jonas / Jonaitis / 8 / 9 / ... / 9 <br>
-### Programos rezultatų išvedimo (*"rezultatai.txt"*) formatas:
-Vardas1 / Pavarde1 / Galutinis(Vid.) / Galutinis(Med.) <br>
-Jonas / Jonaitis / 7.8 / 8.0 <br>
-### Programoje testuoti failai:
-"studentai10000.txt" - 10 tūkst. studentų <br>
-"studentai100000.txt" - 100 tūkst. studentų <br>
-"studentai1000000.txt" - 1 mln. studentų <br>
-#
-### Komentaras:
+##### Komentaras:
 ```
-Atliekant šią užduotį kilo problemų su didelės talpos duomenų failais. Dėl šios problemos išsitrynė pagrindinė "master" šaka bei v0.1 projektas perkeltas į "v0.1-nauja" šaką. Taip pat dėl šios priežasties relizas išleistas pavėluotai, o "v0.1-nauja" šaka neturi reikalaujamo commit'ų kiekio.
+Visi programa sugeneruoti failai buvo sukurti su 5 namų darbų pažymiais studentui.
+```
+### Programos rezultatų/išvedimo failų formatas:
+Vardas1 / Pavarde1 / Galutinis(Vid.) / Galutinis(Med.) <br>
+Jonas / Jonaitis / 7.80 / 8.00 <br>
+### Programa testuoti failai:
+* Užduotyje pateikti failai:
+  * "studentai10000.txt" - 10 tūkst. studentų <br>
+  * "studentai100000.txt" - 100 tūkst. studentų <br>
+  * "studentai1000000.txt" - 1 mln. studentų <br>
+  * "kursiokai.txt" - ~10 studentų <br>
+* Programos sugeneruoti failai:
+  * "1000studentu.txt" - 1 tūkst. studentų <br>
+  * "10000studentu.txt" - 10 tūkst. studentų <br>
+  * "100000studentu.txt" - 100 tūkst. studentų <br>
+  * "1000000studentu.txt" - 1 mln. studentų <br>
+  * "10000000studentu.txt" - 10 mln. studentų <br>
+## Greičio spartos analizė
+| Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų rūšiavimas | Išvedimas į failus |
+|:-----------------------|:----------------|:--------------------|:--------------------|:-------------------|
+| studentai10000.txt     | -               | 0.062 s             | 0.003 s             | 0.044 s            |
+| studentai100000.txt    | -               | 0.66 s              | 0.035 s             | 0.427 s            |
+| studentai1000000.txt   | -               | 3.295 s             | 0.326 s             | 4.114 s            |
+| kursiokai.txt          | -               | 0.002 s             | 0.00001 s           | 0.004 s            |
+|                        |                 |                     |                     |                    |
+| 1000studentu.txt       | 0.011 s         | 0.004 s             | 0.0002 s            | 0.006 s            |
+| 10000studentu.txt      | 0.043 s         | 0.039 s             | 0.005 s             | 0.093 s            |
+| 100000studentu.txt     | 0.435 s         | 0.269 s             | 0.055 s             | 0.413 s            |
+| 1000000studentu.txt    | 4.323 s         | 2.296 s             | 0.28 s              | 4.104 s            |
+| 10000000studentu.txt   | 42.89 s         | 24.07 s             | 7.603 s             | 59.189 s           |
