@@ -1,6 +1,6 @@
 ﻿#include "funkcijos.h"
 
-pair<int, string> meniu()  {
+pair<int, string> meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir įvesto failo pavadinimo porą
     int ivestis;
     string name;
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
@@ -17,11 +17,11 @@ pair<int, string> meniu()  {
     cout << string(50, '-') << endl;
     if (ivestis == 1 ) {}
     else if (ivestis == 2 || ivestis == 3 || ivestis == 4) {
-        cout << "Iveskite failo pavadinima, kuri norime nuskaityti:\n";
+        cout << "Iveskite failo pavadinima, kuri norite nuskaityti/sugeneruoti:\n";
         cin >> name;
         cout << string(50, '-') << endl;
     }
-    return make_pair(ivestis, name);
+    return make_pair(ivestis, name);    // grąžinama įvesčių
 }
 
 int VienasDu() {
@@ -106,14 +106,20 @@ Studentas ivesk() {
         }
         laik.egzas = dist(gen); // studento egzamino balo sugeneravimas atsitiktinai
     }
-    laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // studento galutinio vidurkio apskaičiavimas
-    laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
+    if (laik.pazymiai.empty()) {
+        laik.rez = laik.egzas * 0.6;    // studento galutinio vidurkio apskaičiavimas
+        laik.mediana = 0;
+    }
+    else {
+        laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // studento galutinio vidurkio apskaičiavimas
+        laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
+    }
     return laik;
 }
 
 void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
     Studentas laik;
-    string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
+    string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";  // failo kelio sudarymas
     ifstream df(failas);
     if (!df) {
         cout << string(50, '-') << endl;
@@ -141,11 +147,12 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
         ss >> laik.egzas;   // nuskaitomas egzamino balas
         if (laik.pazymiai.empty()) {
             laik.rez = laik.egzas * 0.6;    // studento galutinio vidurkio apskaičiavimas
+            laik.mediana = 0;
         }
         else {
             laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // studento galutinio vidurkio apskaičiavimas
+            laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
         }
-        laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
         if (laik.rez < 5) {
             laik.kategorija = "vargsiukas";
         }
@@ -187,21 +194,21 @@ void FailuGeneravimas(string name) {
     uniform_int_distribution<> dist(1, 10); // random funkcijos algoritmo ribos (1-10)
     string failas;
     int ivestis, nd;
-    failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
+    failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt"; // failo kelio sudarymas
     cout << "Keleto studentu duomenis norite sugeneruoti?:\n";
-    ivestis = tikNr();
+    ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
     cout << string(50, '-') << endl;
     cout << "Iveskite kiek norite sugeneruoti namu darbu pazymiu vienam studentui:\n";
-    nd = tikNr();
-    Timer t;
+    nd = tikNr();   // teigiamo skaičiaus funkcijos iškvietimas
+    Timer generavimas;  // laiko skaičiavimo pradžia
     ofstream rf(failas);
-    rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
-    for (int i = 0; i < nd; i++) {
+    rf << left << setw(17) << "Vardas" << setw(17) << "Pavarde";
+    for (int i = 0; i < nd; i++) {  // failo header eilutės įrašymas į failą
         rf << setw(2) << left << "ND" << setw(3) << left << i + 1;
     }
     rf << setw(6) << "Egz." << endl;
-    for (int i = 0; i < ivestis; i++) {
-        rf << setw(6) << left << "Vardas" << setw(9) << left << i + 1 << setw(7) << left << "Pavarde" << setw(8) << left << i + 1;
+    for (int i = 0; i < ivestis; i++) { // failo duomenų įrašymas į failą
+        rf << setw(6) << left << "Vardas" << setw(11) << left << i + 1 << setw(7) << left << "Pavarde" << setw(10) << left << i + 1;
         for (int j = 0; j < nd + 1; j++) {
             rf << setw(5) << dist(gen);
         }
@@ -210,12 +217,12 @@ void FailuGeneravimas(string name) {
     rf.close();
     cout << string(50, '-') << endl;
     cout << "Failas '" << name << ".txt' sekmingai sugeneruotas aplanke 'testavimo failai'.\n";
-    cout << "Failo sukurimas uztruko: " << t.elapsed() << " sek.\n";
+    cout << "Failo sukurimas uztruko: " << generavimas.elapsed() << " sek.\n";  // laiko skaičiavimo pabaiga
     cout << string(50, '-') << endl;
 }
 
 void StudentuRusiavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
-    for (auto temp : grupe) {
+    for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kiiatekus
         if (temp.kategorija == "vargsiukas") {
             vargsiukai.push_back(temp);
         }
@@ -226,24 +233,24 @@ void StudentuRusiavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai,
 }
 
 void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai, string name) {
-    Timer skaitymas;
+    Timer skaitymas;    // skaitymo laikmačio pradžia
     NuskaitymasIsFailo(grupe, name);
-    cout << "Failo is " << grupe.size() << " irasu nuskaitymo laikas: " << skaitymas.elapsed() << " sek.\n";
+    cout << "Failo is " << grupe.size() << " irasu nuskaitymo laikas: " << skaitymas.elapsed() << " sek.\n";    // skaitymo laikmačio pabaiga
     cout << string(50, '-') << endl;
-    Timer rusiavimas;
+    Timer rusiavimas;   // rūšiavimo laikmačio pradžia
     StudentuRusiavimas(grupe, vargsiukai, kietiakai);
-    cout << grupe.size() << " irasu dalijimo i dvi grupes laikas: " << rusiavimas.elapsed() << " sek.\n";
+    cout << grupe.size() << " irasu dalijimo i dvi grupes laikas: " << rusiavimas.elapsed() << " sek.\n";   // rūšiavimo laikmačio pabaiga
     cout << string(50, '-') << endl;
-    Timer vargas;
+    Timer vargas;   // vargšiukų išvedimo į failą laikmačio pradžia
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
-    double vargasTime = vargas.elapsed();
+    double vargasTime = vargas.elapsed();   // vargšiukų išvedimo į failą laikmačio pabaiga
     cout << vargsiukai.size() << " irasu isvedimo i Vargsiuku faila laikas: " << vargasTime << " sek.\n";
     cout << string(50, '-') << endl;
-    Timer kietas;
+    Timer kietas;   // kietiakų išvedimo į failą laikmačio pradžia
     IsvedimasIFaila(kietiakai, "Kietiakai");
-    double kietasTime = kietas.elapsed();
+    double kietasTime = kietas.elapsed();   // kietiakų išvedimo į failą laikmačio pabaiga
     cout << kietiakai.size() << " irasu isvedimo i Kietiaku faila laikas: " << kietasTime << " sek.\n";
     cout << string(50, '-') << endl;
-    double bendras = vargasTime + kietasTime;
+    double bendras = vargasTime + kietasTime;   // bendros failų išvedimo trukmės apskaičiavimas
     cout << grupe.size() << " irasu isvedimo i failus bendras laikas: " << bendras << " sek.\n";
 }

@@ -3,8 +3,8 @@
 #include <chrono>
 
 class Timer {
-    using hrClock = std::chrono::high_resolution_clock;
-    using durationDouble = std::chrono::duration<double>;
+    using hrClock = std::chrono::high_resolution_clock; // nurodomas kintamasis naudoti high_resolution_clock
+    using durationDouble = std::chrono::duration<double>;   // nurodomas kintamasis naudoti duration<double>
 private:
     std::chrono::time_point<hrClock> start;
 public:
@@ -13,6 +13,6 @@ public:
         start = hrClock::now();
     }
     double elapsed() const {
-        return durationDouble(hrClock::now() - start).count();
+        return durationDouble(hrClock::now() - start).count();  // laiko tarpo apskai?iavimas nuo starto iki dabar
     }
 };
