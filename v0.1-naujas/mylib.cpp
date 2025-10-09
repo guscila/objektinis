@@ -1,7 +1,8 @@
 ﻿#include "funkcijos.h"
 
-int meniu() {
+pair<int, string> meniu() {
     int ivestis;
+    string name;
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
@@ -13,7 +14,12 @@ int meniu() {
         else break;
     }
     cout << string(50, '-') << endl;
-    return ivestis;
+    if (ivestis == 1 ) {}
+    else if (ivestis == 2 || ivestis == 3) {
+        cout << "Iveskite failo pavadinima, kuri norime nuskaityti:\n";
+        cin >> name;
+    }
+    return make_pair(ivestis, name);
 }
 
 int VienasDu() {

@@ -7,7 +7,9 @@ int main()
     vector<Studentas> kietiakai;
     int pasirinkimas;
     string name;
-    pasirinkimas = meniu(); // meniu funkcijos iškvietimas
+    auto ivestis = meniu();
+    pasirinkimas = ivestis.first; // meniu funkcijos iškvietimas
+    name = ivestis.second;
     if (pasirinkimas == 1) {
         int stud;
         cout << "Iveskite keleto studentu duomenis norite ivesti: ";
@@ -20,14 +22,10 @@ int main()
         }
     }
     else if (pasirinkimas == 2) {
-        cout << "Iveskite failo pavadinima, kuri norime nuskaityti:\n";
-        cin >> name;
-        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
         cout << string(50, '-') << endl;
+        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
     }
     else if (pasirinkimas == 3) {
-        cout << "Iveskite failo pavadinima, kuri norite sugeneruoti:\n";
-        cin >> name;
         cout << string(50, '-') << endl;
         FailuGeneravimas(name);
         NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
@@ -35,10 +33,6 @@ int main()
         IsvedimasIFaila(vargsiukai, "Vargsiukai");
         IsvedimasIFaila(kietiakai, "Kietiakai");
         return 0;
-    }
-    else {
-        cout << "Klaida. ";
-        pasirinkimas = tikNr();
     }
     IsvedimasIFaila(grupe, "rezultatai");  // failo įrašymo funkcijos iškvietimas
     return 0;

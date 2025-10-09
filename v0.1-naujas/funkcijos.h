@@ -10,6 +10,7 @@
 #include <sstream>
 #include <limits>
 #include <chrono>
+#include <utility>
 #include "studentas.h"
 
 using std::cout;
@@ -34,9 +35,11 @@ using std::stringstream;
 using std::cerr;
 using std::numeric_limits;
 using std::streamsize;
+using std::pair;
+using std::make_pair;
 
 
-int meniu();    // meniu funkcija
+pair<int, string> meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
 int tikNr();	// funkcija patikrai, kad įvestis yra skaičius didesnis už 0
 Studentas ivesk();  // studentų įvesties fukcija
