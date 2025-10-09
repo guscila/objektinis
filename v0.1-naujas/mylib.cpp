@@ -174,11 +174,14 @@ void IsvedimasIFaila(vector<Studentas>& grupe, string name) {
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     ofstream rf(failas);
     StudentuRusiavimas(grupe, name);    // studentų rūšiavimo funkcijos iškvietimas
-    rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    cout << string(50, '-') << endl;
+    Timer isvedimas;    // išvedimo į failą laikmačio pradžia
+    rf << left << setw(17) << "Vardas" << setw(17) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     for (auto temp : grupe) // studentų duomenų įrašymas į failą
-        rf << left << setw(15) << temp.vardas << setw(15) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
+        rf << left << setw(17) << temp.vardas << setw(17) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
     rf.close();
     cout << "Rezultatai sekmingai irasyti i faila '" << name << ".txt' aplanke 'testavimo failai'." << endl;
+    cout << grupe.size() << " irasu isvedimo i '" << name << ".txt faila laikas : " << isvedimas.elapsed() << " sek.\n";   // išvedimo į failą laikmačio pradžia
 }
 
 float mediana(vector<int>& pazymiai) {
@@ -244,18 +247,10 @@ void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, ve
     StudentuKategorizacija(grupe, vargsiukai, kietiakai);
     cout << grupe.size() << " irasu dalijimo i dvi grupes laikas: " << rusiavimas.elapsed() << " sek.\n";   // rūšiavimo laikmačio pabaiga
     cout << string(50, '-') << endl;
-    Timer vargas;   // vargšiukų išvedimo į failą laikmačio pradžia
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
-    double vargasTime = vargas.elapsed();   // vargšiukų išvedimo į failą laikmačio pabaiga
-    cout << vargsiukai.size() << " irasu isvedimo i Vargsiuku faila laikas: " << vargasTime << " sek.\n";
     cout << string(50, '-') << endl;
-    Timer kietas;   // kietiakų išvedimo į failą laikmačio pradžia
     IsvedimasIFaila(kietiakai, "Kietiakai");
-    double kietasTime = kietas.elapsed();   // kietiakų išvedimo į failą laikmačio pabaiga
-    cout << kietiakai.size() << " irasu isvedimo i Kietiaku faila laikas: " << kietasTime << " sek.\n";
     cout << string(50, '-') << endl;
-    double bendras = vargasTime + kietasTime;   // bendros failų išvedimo trukmės apskaičiavimas
-    cout << grupe.size() << " irasu isvedimo i failus bendras laikas: " << bendras << " sek.\n";
 }
 
 void StudentuRusiavimas(vector<Studentas>& grupe, string name) {    // studentų rūšiavimo funkcija rūšiuojanti studentus pagal naudotojo pasirinkimą
@@ -274,22 +269,22 @@ void StudentuRusiavimas(vector<Studentas>& grupe, string name) {    // studentų
         else break;
     }
     if (ivestis == 1) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės didėjimo tvarka
             return stud1.vardas < stud2.vardas;
             });
     }
     else if (ivestis == 2) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės mažėjimo tvarka
             return stud1.vardas > stud2.vardas;
             });
     }
     else if (ivestis == 3) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant pagal galutinį vidurkį didėjimo tvarka
             return stud1.rez < stud2.rez;
             });
     }
     else if (ivestis == 4) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant pagal galutinį vidurkį mažėjimo tvarka
             return stud1.rez > stud2.rez;
             });
     }
