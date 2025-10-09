@@ -7,17 +7,19 @@ pair<int, string> meniu()  {
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
     cout << "3 - sugeneruoti studentu duomenis i failus:\n";
+    cout << "4 - failu spartos analize;\n";
     cout << "Iveskite savo pasirinkima: ";
     while (true) {
         ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
-        if (ivestis > 3) cout << "Neteisinga ivestis. Bandykite vel: ";
+        if (ivestis > 4) cout << "Neteisinga ivestis. Bandykite vel: ";
         else break;
     }
     cout << string(50, '-') << endl;
     if (ivestis == 1 ) {}
-    else if (ivestis == 2 || ivestis == 3) {
+    else if (ivestis == 2 || ivestis == 3 || ivestis == 4) {
         cout << "Iveskite failo pavadinima, kuri norime nuskaityti:\n";
         cin >> name;
+        cout << string(50, '-') << endl;
     }
     return make_pair(ivestis, name);
 }
@@ -212,7 +214,7 @@ void FailuGeneravimas(string name) {
     cout << string(50, '-') << endl;
 }
 
-void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
+void StudentuRusiavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
     for (auto temp : grupe) {
         if (temp.kategorija == "vargsiukas") {
             vargsiukai.push_back(temp);
@@ -221,4 +223,27 @@ void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargs
             kietiakai.push_back(temp);
         }
     }
+}
+
+void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai, string name) {
+    Timer skaitymas;
+    NuskaitymasIsFailo(grupe, name);
+    cout << "Failo is " << grupe.size() << " irasu nuskaitymo laikas: " << skaitymas.elapsed() << " sek.\n";
+    cout << string(50, '-') << endl;
+    Timer rusiavimas;
+    StudentuRusiavimas(grupe, vargsiukai, kietiakai);
+    cout << grupe.size() << " irasu dalijimo i dvi grupes laikas: " << rusiavimas.elapsed() << " sek.\n";
+    cout << string(50, '-') << endl;
+    Timer vargas;
+    IsvedimasIFaila(vargsiukai, "Vargsiukai");
+    double vargasTime = vargas.elapsed();
+    cout << vargsiukai.size() << " irasu isvedimo i Vargsiuku faila laikas: " << vargasTime << " sek.\n";
+    cout << string(50, '-') << endl;
+    Timer kietas;
+    IsvedimasIFaila(kietiakai, "Kietiakai");
+    double kietasTime = kietas.elapsed();
+    cout << kietiakai.size() << " irasu isvedimo i Kietiaku faila laikas: " << kietasTime << " sek.\n";
+    cout << string(50, '-') << endl;
+    double bendras = vargasTime + kietasTime;
+    cout << grupe.size() << " irasu isvedimo i failus bendras laikas: " << bendras << " sek.\n";
 }

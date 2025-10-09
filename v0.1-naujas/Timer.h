@@ -3,7 +3,6 @@
 #include <chrono>
 
 class Timer {
-    // usage of using
     using hrClock = std::chrono::high_resolution_clock;
     using durationDouble = std::chrono::duration<double>;
 private:

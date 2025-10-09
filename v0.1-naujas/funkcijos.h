@@ -48,4 +48,5 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name);   // funkcija du
 void IsvedimasIFaila(vector<Studentas>& grupe, string name);  // funkcija rezultatų išvedimui į failą
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
 void FailuGeneravimas(string name);	// studentų duomenų failų generavimo funkcija
-void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);	// studentų rūšiavimo funkcija į Vargšiukus ir Kietiakus
+void StudentuRusiavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);	// studentų rūšiavimo funkcija į Vargšiukus ir Kietiakus
+void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai, string name);	// failų greičio spartos analizės funkcija

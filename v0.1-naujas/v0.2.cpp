@@ -34,6 +34,10 @@ int main()
         IsvedimasIFaila(kietiakai, "Kietiakai");
         return 0;
     }
+    else if (pasirinkimas == 4) {
+        FailuTestavimas(grupe, vargsiukai, kietiakai, name);
+        return 0;
+    }
     IsvedimasIFaila(grupe, "rezultatai");  // failo įrašymo funkcijos iškvietimas
     return 0;
 }
