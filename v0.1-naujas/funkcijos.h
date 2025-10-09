@@ -12,6 +12,7 @@
 #include <chrono>
 #include <utility>
 #include "studentas.h"
+#include "timer.h"
 
 using std::cout;
 using std::cin;

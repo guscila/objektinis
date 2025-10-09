@@ -128,8 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="funkcijos.h" />
-    <ClInclude Include="menu.h" />
     <ClInclude Include="studentas.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

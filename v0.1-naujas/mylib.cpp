@@ -1,6 +1,6 @@
 ﻿#include "funkcijos.h"
 
-pair<int, string> meniu() {
+pair<int, string> meniu()  {
     int ivestis;
     string name;
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
@@ -191,6 +191,7 @@ void FailuGeneravimas(string name) {
     cout << string(50, '-') << endl;
     cout << "Iveskite kiek norite sugeneruoti namu darbu pazymiu vienam studentui:\n";
     nd = tikNr();
+    Timer t;
     ofstream rf(failas);
     rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde";
     for (int i = 0; i < nd; i++) {
@@ -207,6 +208,8 @@ void FailuGeneravimas(string name) {
     rf.close();
     cout << string(50, '-') << endl;
     cout << "Failas '" << name << ".txt' sekmingai sugeneruotas aplanke 'testavimo failai'.\n";
+    cout << "Failo sukurimas uztruko: " << t.elapsed() << " sek.\n";
+    cout << string(50, '-') << endl;
 }
 
 void StudentuRusiavimas(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
