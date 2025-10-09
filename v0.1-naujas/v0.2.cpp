@@ -28,10 +28,6 @@ int main()
     else if (pasirinkimas == 3) {
         cout << string(50, '-') << endl;
         FailuGeneravimas(name); // failo generavimo funkcijos iškvietimas
-        NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
-        StudentuRusiavimas(grupe, vargsiukai, kietiakai);   // studentų rūšiavimo į vargšiukus ir kietekus funkcijos iškvietimas
-        IsvedimasIFaila(vargsiukai, "Vargsiukai");  // vargšiukų išvedimas į failą
-        IsvedimasIFaila(kietiakai, "Kietiakai");    // kietekų išvedimas į failą
         return 0;
     }
     else if (pasirinkimas == 4) {

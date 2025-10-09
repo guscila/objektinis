@@ -25,7 +25,7 @@ using std::right;
 using std::setfill;
 using std::setprecision;
 using std::fixed;
-using std::sort;
+using std::stable_sort;
 using std::uniform_int_distribution;
 using std::mt19937;
 using std::random_device;
@@ -48,5 +48,6 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name);   // funkcija du
 void IsvedimasIFaila(vector<Studentas>& grupe, string name);  // funkcija rezultatų išvedimui į failą
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
 void FailuGeneravimas(string name);	// studentų duomenų failų generavimo funkcija
-void StudentuRusiavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);	// studentų rūšiavimo funkcija į Vargšiukus ir Kietiakus
+void StudentuKategorizacija(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);	// studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
 void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai, string name);	// failų greičio spartos analizės funkcija
+void StudentuRusiavimas(vector<Studentas>& grupe, string name);	// studentų rūšiavimo funkcija

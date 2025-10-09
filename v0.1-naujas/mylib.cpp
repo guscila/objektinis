@@ -6,8 +6,8 @@ pair<int, string> meniu()  {    // meniu funkcija grąžinanti naudotojo pasirin
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
-    cout << "3 - sugeneruoti studentu duomenis i failus:\n";
-    cout << "4 - failu spartos analize;\n";
+    cout << "3 - sugeneruoti faila su studentu duomenimis:\n";
+    cout << "4 - failu testavimas/spartos analize;\n";
     cout << "Iveskite savo pasirinkima: ";
     while (true) {
         ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
@@ -16,8 +16,13 @@ pair<int, string> meniu()  {    // meniu funkcija grąžinanti naudotojo pasirin
     }
     cout << string(50, '-') << endl;
     if (ivestis == 1 ) {}
-    else if (ivestis == 2 || ivestis == 3 || ivestis == 4) {
-        cout << "Iveskite failo pavadinima, kuri norite nuskaityti/sugeneruoti:\n";
+    else if (ivestis == 2 || ivestis == 4) {
+        cout << "Iveskite failo pavadinima, kuri norite nuskaityti:\n";
+        cin >> name;
+        cout << string(50, '-') << endl;
+    }
+    else if (ivestis == 3) {
+        cout << "Iveskite failo pavadinima, kuri norite sugeneruoti:\n";
         cin >> name;
         cout << string(50, '-') << endl;
     }
@@ -168,9 +173,7 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
 void IsvedimasIFaila(vector<Studentas>& grupe, string name) {
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     ofstream rf(failas);
-    sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
-        return stud1.vardas < stud2.vardas;
-        });
+    StudentuRusiavimas(grupe, name);    // studentų rūšiavimo funkcijos iškvietimas
     rf << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     for (auto temp : grupe) // studentų duomenų įrašymas į failą
         rf << left << setw(15) << temp.vardas << setw(15) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
@@ -221,7 +224,7 @@ void FailuGeneravimas(string name) {
     cout << string(50, '-') << endl;
 }
 
-void StudentuRusiavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
+void StudentuKategorizacija(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
     for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kiiatekus
         if (temp.kategorija == "vargsiukas") {
             vargsiukai.push_back(temp);
@@ -238,7 +241,7 @@ void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, ve
     cout << "Failo is " << grupe.size() << " irasu nuskaitymo laikas: " << skaitymas.elapsed() << " sek.\n";    // skaitymo laikmačio pabaiga
     cout << string(50, '-') << endl;
     Timer rusiavimas;   // rūšiavimo laikmačio pradžia
-    StudentuRusiavimas(grupe, vargsiukai, kietiakai);
+    StudentuKategorizacija(grupe, vargsiukai, kietiakai);
     cout << grupe.size() << " irasu dalijimo i dvi grupes laikas: " << rusiavimas.elapsed() << " sek.\n";   // rūšiavimo laikmačio pabaiga
     cout << string(50, '-') << endl;
     Timer vargas;   // vargšiukų išvedimo į failą laikmačio pradžia
@@ -253,4 +256,42 @@ void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, ve
     cout << string(50, '-') << endl;
     double bendras = vargasTime + kietasTime;   // bendros failų išvedimo trukmės apskaičiavimas
     cout << grupe.size() << " irasu isvedimo i failus bendras laikas: " << bendras << " sek.\n";
+}
+
+void StudentuRusiavimas(vector<Studentas>& grupe, string name) {    // studentų rūšiavimo funkcija rūšiuojanti studentus pagal naudotojo pasirinkimą
+    cout << string(50, '-') << endl;
+    cout << "Kaip norite surusiuoti '" << name << ".txt' faila?:\n";
+    cout << "1 - rusiuoti faila pagal varda/pavarde abeceles didejimo tvarka;\n";
+    cout << "2 - rusiuoti faila pagal varda/pavarde abeceles mazejimo tvarka;\n";
+    cout << "3 - rusiuoti faila pagal galutinio vidurki didejimo tvarka;\n";
+    cout << "4 - rusiuoti faila pagal galutinio vidurki mazejimo tvarka;\n";
+    cout << "5 - failo nerusiuoti;\n";
+    cout << "Iveskite savo pasirinkima: \n";
+    int ivestis;
+    while (true) {
+        ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
+        if (ivestis > 5) cout << "Neteisinga ivestis. Bandykite vel: ";
+        else break;
+    }
+    if (ivestis == 1) {
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+            return stud1.vardas < stud2.vardas;
+            });
+    }
+    else if (ivestis == 2) {
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+            return stud1.vardas > stud2.vardas;
+            });
+    }
+    else if (ivestis == 3) {
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+            return stud1.rez < stud2.rez;
+            });
+    }
+    else if (ivestis == 4) {
+        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės tvarka
+            return stud1.rez > stud2.rez;
+            });
+    }
+    else return;
 }
