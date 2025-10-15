@@ -9,5 +9,4 @@ struct Studentas {  // studento struktūra
     int egzas;
     float rez;
     float mediana;
-    std::string kategorija;
 };

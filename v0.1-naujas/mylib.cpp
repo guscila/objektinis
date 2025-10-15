@@ -158,12 +158,6 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
             laik.rez = laik.egzas * 0.6 + double(sum) / double(laik.pazymiai.size()) * 0.4; // studento galutinio vidurkio apskaičiavimas
             laik.mediana = mediana(laik.pazymiai);  // medianos apskaičiavimo funkcijos iškvietimas
         }
-        if (laik.rez < 5) {
-            laik.kategorija = "vargsiukas";
-        }
-        else if (laik.rez >= 5) {
-            laik.kategorija = "kietiakas";
-        }
         grupe.push_back(laik);  // studento duomenų įdėjimas į vektorių
     }
     df.close();
@@ -229,10 +223,10 @@ void FailuGeneravimas(string name) {
 
 void StudentuKategorizacija(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
     for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kiiatekus
-        if (temp.kategorija == "vargsiukas") {
+        if (temp.rez < 5) {
             vargsiukai.push_back(temp);
         }
-        else if (temp.kategorija == "kietiakas") {
+        else if (temp.rez >= 5) {
             kietiakai.push_back(temp);
         }
     }
@@ -258,8 +252,8 @@ void StudentuRusiavimas(vector<Studentas>& grupe, string name) {    // studentų
     cout << "Kaip norite surusiuoti '" << name << ".txt' faila?:\n";
     cout << "1 - rusiuoti faila pagal varda/pavarde abeceles didejimo tvarka;\n";
     cout << "2 - rusiuoti faila pagal varda/pavarde abeceles mazejimo tvarka;\n";
-    cout << "3 - rusiuoti faila pagal galutinio vidurki didejimo tvarka;\n";
-    cout << "4 - rusiuoti faila pagal galutinio vidurki mazejimo tvarka;\n";
+    cout << "3 - rusiuoti faila pagal galutini vidurki didejimo tvarka;\n";
+    cout << "4 - rusiuoti faila pagal galutini vidurki mazejimo tvarka;\n";
     cout << "5 - failo nerusiuoti;\n";
     cout << "Iveskite savo pasirinkima: \n";
     int ivestis;
