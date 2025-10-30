@@ -133,7 +133,8 @@ Studentas ivesk() {
     return laik;
 }
 
-void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
+template<typename cont>
+void NuskaitymasIsFailo(cont& grupe, string name) {
     Studentas laik;
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";  // failo kelio sudarymas
     ifstream df(failas);
@@ -175,7 +176,8 @@ void NuskaitymasIsFailo(vector<Studentas>& grupe, string name) {
     cout << "Failas '" + name + ".txt' sekmingai nuskaitytas.\n";
 }
 
-void IsvedimasIFaila(vector<Studentas>& grupe, string name) {
+template<typename cont>
+void IsvedimasIFaila(cont& grupe, string name) {
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     ofstream rf(failas);
     StudentuRusiavimas(grupe, name);    // studentų rūšiavimo funkcijos iškvietimas
@@ -232,7 +234,8 @@ void FailuGeneravimas(string name) {
     cout << string(50, '-') << endl;
 }
 
-void StudentuKategorizacija(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
+template<typename cont>
+void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai) {
     for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kiiatekus
         if (temp.rez < 5) {
             vargsiukai.push_back(temp);
@@ -243,7 +246,8 @@ void StudentuKategorizacija(vector<Studentas>& grupe, vector<Studentas>& vargsiu
     }
 }
 
-void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai, string name) {
+template<typename cont>
+void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name) {
     Timer skaitymas;    // skaitymo laikmačio pradžia
     NuskaitymasIsFailo(grupe, name);
     cout << "Failo is " << grupe.size() << " irasu nuskaitymo laikas: " << skaitymas.elapsed() << " sek.\n";    // skaitymo laikmačio pabaiga
@@ -258,7 +262,8 @@ void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, ve
     cout << string(50, '-') << endl;
 }
 
-void StudentuRusiavimas(vector<Studentas>& grupe, string name) {    // studentų rūšiavimo funkcija rūšiuojanti studentus pagal naudotojo pasirinkimą
+template<typename cont>
+void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo funkcija rūšiuojanti studentus pagal naudotojo pasirinkimą
     cout << string(50, '-') << endl;
     cout << "Kaip norite surusiuoti '" << name << ".txt' faila?:\n";
     cout << "1 - rusiuoti faila pagal varda/pavarde abeceles didejimo tvarka;\n";

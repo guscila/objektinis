@@ -38,18 +38,23 @@ using std::stringstream;
 using std::cerr;
 using std::numeric_limits;
 using std::streamsize;
-using std::pair;
-using std::make_pair;
+using std::list;
 
+enum class Container { Vector, List };
 
 MeniuAts meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
 int tikNr();	// funkcija patikrai, kad įvestis yra skaičius didesnis už 0
 Studentas ivesk();  // studentų įvesties fukcija
-void NuskaitymasIsFailo(vector<Studentas>& grupe, string name);   // funkcija duomenų nuskaitymui iš failo
-void IsvedimasIFaila(vector<Studentas>& grupe, string name);  // funkcija rezultatų išvedimui į failą
+template<typename cont>
+void NuskaitymasIsFailo(cont& grupe, string name);   // funkcija duomenų nuskaitymui iš failo
+template<typename cont>
+void IsvedimasIFaila(cont& grupe, string name);  // funkcija rezultatų išvedimui į failą
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
 void FailuGeneravimas(string name);	// studentų duomenų failų generavimo funkcija
-void StudentuKategorizacija(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);	// studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
-void FailuTestavimas(vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai, string name);	// failų greičio spartos analizės funkcija
-void StudentuRusiavimas(vector<Studentas>& grupe, string name);	// studentų rūšiavimo funkcija
+template<typename cont>
+void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai);	// studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
+template<typename cont>
+void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name);	// failų greičio spartos analizės funkcija
+template<typename cont>
+void StudentuRusiavimas(cont& grupe, string name);	// studentų rūšiavimo funkcija
