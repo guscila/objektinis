@@ -24,6 +24,7 @@
     <ProjectGuid>{a6b8f74c-690a-4ce6-9b38-5d6eea226bee}</ProjectGuid>
     <RootNamespace>v01naujas</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>1lab.</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -124,10 +125,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="mylib.cpp" />
-    <ClCompile Include="v0.2.cpp" />
+    <ClCompile Include="v0.3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="funkcijos.h" />
+    <ClInclude Include="meniu.h" />
     <ClInclude Include="studentas.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

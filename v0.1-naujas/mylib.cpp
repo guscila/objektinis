@@ -1,8 +1,10 @@
 ﻿#include "funkcijos.h"
+#include "Meniu.h"
 
-pair<int, string> meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir įvesto failo pavadinimo porą
+MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir įvesto failo pavadinimo porą
     int ivestis;
     string name;
+    int cont;
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
@@ -26,7 +28,16 @@ pair<int, string> meniu()  {    // meniu funkcija grąžinanti naudotojo pasirin
         cin >> name;
         cout << string(50, '-') << endl;
     }
-    return make_pair(ivestis, name);    // grąžinama įvesčių
+    cout << "Pasirinkite norima naudoti konteineri:\n";
+    cout << "1 - vector\n";
+    cout << "2 - list\n";
+    while (true) {
+        cont = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
+        if (cont != 1 || cont != 2) cout << "Neteisinga ivestis. Bandykite vel: ";
+        else break;
+    }
+    Container konteineris = (cont == 1) ? Container::Vector : Container::List;
+    return MeniuAts{ ivestis, name, konteineris};    // grąžinama įvesčių
 }
 
 int VienasDu() {

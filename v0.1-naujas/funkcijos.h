@@ -12,7 +12,9 @@
 #include <chrono>
 #include <utility>
 #include "studentas.h"
-#include "timer.h"
+#include "Timer.h"
+#include <list>
+
 
 using std::cout;
 using std::cin;
@@ -40,7 +42,7 @@ using std::pair;
 using std::make_pair;
 
 
-pair<int, string> meniu();    // meniu funkcija
+MeniuAts meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
 int tikNr();	// funkcija patikrai, kad įvestis yra skaičius didesnis už 0
 Studentas ivesk();  // studentų įvesties fukcija
