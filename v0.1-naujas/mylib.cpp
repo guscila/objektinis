@@ -278,25 +278,40 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
         if (ivestis > 5) cout << "Neteisinga ivestis. Bandykite vel: ";
         else break;
     }
-    if (ivestis == 1) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės didėjimo tvarka
-            return stud1.vardas < stud2.vardas;
-            });
+    if (std::is_same_v<cont, list<Studentas>>) {
+        if (ivestis == 1) {
+            grupe.sort([](auto& a, auto& b) { return a.vardas < b.vardas; });
+        }
+        else if (ivestis == 2) {
+            grupe.sort([](auto& a, auto& b) { return a.vardas > b.vardas; });
+        }
+        else if (ivestis == 3) {
+            grupe.sort([](auto& a, auto& b) { return a.rez < b.rez;    });
+        }
+        else if (ivestis == 4) {
+            grupe.sort([](auto& a, auto& b) { return a.rez > b.rez;    });
+        }
     }
-    else if (ivestis == 2) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės mažėjimo tvarka
-            return stud1.vardas > stud2.vardas;
-            });
+    else {
+        if (ivestis == 1) {
+            stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės didėjimo tvarka
+                return stud1.vardas < stud2.vardas;
+                });
+        }
+        else if (ivestis == 2) {
+            stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės mažėjimo tvarka
+                return stud1.vardas > stud2.vardas;
+                });
+        }
+        else if (ivestis == 3) {
+            stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant pagal galutinį vidurkį didėjimo tvarka
+                return stud1.rez < stud2.rez;
+                });
+        }
+        else if (ivestis == 4) {
+            stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant pagal galutinį vidurkį mažėjimo tvarka
+                return stud1.rez > stud2.rez;
+                });
+        }
     }
-    else if (ivestis == 3) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant pagal galutinį vidurkį didėjimo tvarka
-            return stud1.rez < stud2.rez;
-            });
-    }
-    else if (ivestis == 4) {
-        stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant pagal galutinį vidurkį mažėjimo tvarka
-            return stud1.rez > stud2.rez;
-            });
-    }
-    else return;
 }
