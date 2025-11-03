@@ -50,6 +50,8 @@ template<typename cont>
 void NuskaitymasIsFailo(cont& grupe, string name);   // funkcija duomenų nuskaitymui iš failo
 template<typename cont>
 void IsvedimasIFaila(cont& grupe, string name);  // funkcija rezultatų išvedimui į failą
+template<typename cont>
+void IsvedimasITerminala(cont& grupe);
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
 void FailuGeneravimas(string name);	// studentų duomenų failų generavimo funkcija
 template<typename cont>

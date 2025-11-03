@@ -194,6 +194,15 @@ void IsvedimasIFaila(cont& grupe, string name) {
     cout << grupe.size() << " irasu isvedimo i '" << name << ".txt faila laikas : " << isvedimas.elapsed() << " sek.\n";   // išvedimo į failą laikmačio pradžia
 }
 
+template<typename cont>
+void IsvedimasITerminala(cont& grupe) {
+    cout << left << setw(17) << "Vardas" << setw(17) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << setw(20) << "Adresas" << endl;
+    for (auto temp : grupe) { // studentų duomenų išvedimas į terminalą
+        const void* adresas = static_cast<const void*>(&temp);
+        cout << left << setw(17) << temp.vardas << setw(17) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << setw(20) << adresas << endl;
+    }
+}
+
 float mediana(vector<int>& pazymiai) {
     int nd;
     sort(pazymiai.begin(), pazymiai.end()); // studento namų darbų pažymių vektoriaus surūšiavimas didėjimo tvarka

@@ -10,3 +10,5 @@ template void FailuTestavimas<std::vector<Studentas>>(std::vector<Studentas>&, s
 template void FailuTestavimas<std::list<Studentas>>(std::list<Studentas>&, std::list<Studentas>&, std::list<Studentas>&, std::string);
 template void StudentuRusiavimas<std::vector<Studentas>>(std::vector<Studentas>&, std::string);
 template void StudentuRusiavimas<std::list<Studentas>>(std::list<Studentas>&, std::string);
+template void IsvedimasITerminala<std::vector<Studentas>>(std::vector<Studentas>&);
+template void IsvedimasITerminala<std::list<Studentas>>(std::list<Studentas>&);
