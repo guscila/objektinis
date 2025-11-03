@@ -183,15 +183,13 @@ template<typename cont>
 void IsvedimasIFaila(cont& grupe, string name) {
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     ofstream rf(failas);
-    StudentuRusiavimas(grupe, name);    // studentų rūšiavimo funkcijos iškvietimas
     cout << string(50, '-') << endl;
-    Timer isvedimas;    // išvedimo į failą laikmačio pradžia
     rf << left << setw(17) << "Vardas" << setw(17) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     for (auto temp : grupe) // studentų duomenų įrašymas į failą
         rf << left << setw(17) << temp.vardas << setw(17) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
     rf.close();
     cout << "Rezultatai sekmingai irasyti i faila '" << name << ".txt' aplanke 'testavimo failai'." << endl;
-    cout << grupe.size() << " irasu isvedimo i '" << name << ".txt faila laikas : " << isvedimas.elapsed() << " sek.\n";   // išvedimo į failą laikmačio pradžia
+    cout << string(50, '-') << endl;
 }
 
 template<typename cont>
@@ -261,16 +259,25 @@ template<typename cont>
 void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name) {
     Timer skaitymas;    // skaitymo laikmačio pradžia
     NuskaitymasIsFailo(grupe, name);
-    cout << "Failo is " << grupe.size() << " irasu nuskaitymo laikas: " << skaitymas.elapsed() << " sek.\n";    // skaitymo laikmačio pabaiga
-    cout << string(50, '-') << endl;
-    Timer rusiavimas;   // rūšiavimo laikmačio pradžia
+    skaitymas.save(" irasu failo nuskaitymo trukme: ", grupe.size());
+    Timer kategorizacija;   // kateforizacijos laikmačio pradžia
     StudentuKategorizacija(grupe, vargsiukai, kietiakai);
-    cout << grupe.size() << " irasu dalijimo i dvi grupes laikas: " << rusiavimas.elapsed() << " sek.\n";   // rūšiavimo laikmačio pabaiga
-    cout << string(50, '-') << endl;
+    kategorizacija.save(" irasu failo kategorizacijos trukme: ", grupe.size());
+    Timer rusiavimasVarg;
+    StudentuRusiavimas(vargsiukai, "Vargsiukai");
+    rusiavimasVarg.save(" vargsiuku surusiavimo trukme: ", vargsiukai.size());
+    Timer rusiavimasKiet;
+    StudentuRusiavimas(kietiakai, "Kietiakai");
+    rusiavimasKiet.save(" kietiaku surusiavimo trukme: ", kietiakai.size());
+    Timer isvedimasVarg;
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
-    cout << string(50, '-') << endl;
+    isvedimasVarg.save(" vargsiuku rusiavimo trukme: ", vargsiukai.size());
+    Timer isvedimasKiet;
     IsvedimasIFaila(kietiakai, "Kietiakai");
+    isvedimasKiet.save(" kietiaku isvedimo trukme: ", kietiakai.size());
     cout << string(50, '-') << endl;
+    cout << name << ".txt testavimo laikai:\n";
+    Timer::printAll();
 }
 
 template<typename cont>
