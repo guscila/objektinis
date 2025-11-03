@@ -1,5 +1,6 @@
 ﻿#include "funkcijos.h"
-#include "Meniu.h"
+#include "meniu.h"
+#include "templates.cpp"
 
 MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir įvesto failo pavadinimo porą
     int ivestis;
@@ -31,11 +32,13 @@ MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir �
     cout << "Pasirinkite norima naudoti konteineri:\n";
     cout << "1 - vector\n";
     cout << "2 - list\n";
+    cout << "Iveskite savo pasirinkima: ";
     while (true) {
         cont = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
-        if (cont != 1 || cont != 2) cout << "Neteisinga ivestis. Bandykite vel: ";
+        if (cont > 2) cout << "Neteisinga ivestis. Bandykite vel: ";
         else break;
     }
+    cout << string(50, '-') << endl;
     Container konteineris = (cont == 1) ? Container::Vector : Container::List;
     return MeniuAts{ ivestis, name, konteineris};    // grąžinama įvesčių
 }
@@ -271,14 +274,14 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
     cout << "3 - rusiuoti faila pagal galutini vidurki didejimo tvarka;\n";
     cout << "4 - rusiuoti faila pagal galutini vidurki mazejimo tvarka;\n";
     cout << "5 - failo nerusiuoti;\n";
-    cout << "Iveskite savo pasirinkima: \n";
+    cout << "Iveskite savo pasirinkima: ";
     int ivestis;
     while (true) {
         ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
         if (ivestis > 5) cout << "Neteisinga ivestis. Bandykite vel: ";
         else break;
     }
-    if (std::is_same_v<cont, list<Studentas>>) {
+    if constexpr (std::is_same_v<cont, list<Studentas>>) {
         if (ivestis == 1) {
             grupe.sort([](auto& a, auto& b) { return a.vardas < b.vardas; });
         }

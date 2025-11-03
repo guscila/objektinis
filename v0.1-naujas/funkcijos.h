@@ -11,10 +11,12 @@
 #include <limits>
 #include <chrono>
 #include <utility>
+#include <list>
+#include <type_traits>
+
 #include "studentas.h"
 #include "Timer.h"
-#include <list>
-
+#include "meniu.h"
 
 using std::cout;
 using std::cin;
@@ -39,8 +41,6 @@ using std::cerr;
 using std::numeric_limits;
 using std::streamsize;
 using std::list;
-
-enum class Container { Vector, List };
 
 MeniuAts meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
