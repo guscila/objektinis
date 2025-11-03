@@ -5,7 +5,7 @@ int main()
     auto m = meniu();   // meniu funkcijos iškvietimas
     int pasirinkimas = m.pasirinkimas;   // naudotojo meniu pasirinkimas
     string name = m.name;    // failo pavadinimas
-    if (m.konteineris == Container::List) {
+    if (m.konteineris == Container::List) { // veiksmai su list konteineriu
         list<Studentas> grupe, vargsiukai, kietiakai;
         if (pasirinkimas == 1) {
             int stud;
@@ -17,7 +17,7 @@ int main()
                 grupe.push_back(ivesk());   // studento duomenų įvesties funkcijos iškvietimas
                 cout << string(50, '-') << endl;
             }
-            IsvedimasITerminala(grupe);  // failo įrašymo funkcijos iškvietimas
+            IsvedimasITerminala(grupe);  // duomenų išvedimo į terminalą funkcijos iškvietimas
         }
         else if (pasirinkimas == 2) {
             cout << string(50, '-') << endl;
@@ -36,7 +36,7 @@ int main()
         }
         return 0;
     }
-    else {
+    else {  // veiksmai su vector konteineriu
         vector<Studentas> grupe, vargsiukai, kietiakai;
         if (pasirinkimas == 1) {
             int stud;
@@ -48,7 +48,7 @@ int main()
                 grupe.push_back(ivesk());   // studento duomenų įvesties funkcijos iškvietimas
                 cout << string(50, '-') << endl;
             }
-            IsvedimasITerminala(grupe);  // failo įrašymo funkcijos iškvietimas
+            IsvedimasITerminala(grupe);  // duomenų išvedimo į terminalą funkcijos iškvietimas
         }
         else if (pasirinkimas == 2) {
             cout << string(50, '-') << endl;

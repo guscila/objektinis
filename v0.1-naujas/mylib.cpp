@@ -2,10 +2,10 @@
 #include "meniu.h"
 #include "templates.cpp"
 
-MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir įvesto failo pavadinimo porą
-    int ivestis;
+MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimus
+    int ivestis;    // naudotojo įvestis
     string name;
-    int cont;
+    int cont; // konteinerio pasirinkimas
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
@@ -15,6 +15,16 @@ MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir �
     while (true) {
         ivestis = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
         if (ivestis > 4) cout << "Neteisinga ivestis. Bandykite vel: ";
+        else break;
+    }
+    cout << string(50, '-') << endl;
+    cout << "Pasirinkite norima naudoti konteineri:\n";
+    cout << "1 - vector\n";
+    cout << "2 - list\n";
+    cout << "Iveskite savo pasirinkima: ";
+    while (true) {
+        cont = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
+        if (cont > 2) cout << "Neteisinga ivestis. Bandykite vel: ";
         else break;
     }
     cout << string(50, '-') << endl;
@@ -29,21 +39,11 @@ MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimo ir �
         cin >> name;
         cout << string(50, '-') << endl;
     }
-    cout << "Pasirinkite norima naudoti konteineri:\n";
-    cout << "1 - vector\n";
-    cout << "2 - list\n";
-    cout << "Iveskite savo pasirinkima: ";
-    while (true) {
-        cont = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
-        if (cont > 2) cout << "Neteisinga ivestis. Bandykite vel: ";
-        else break;
-    }
-    cout << string(50, '-') << endl;
     Container konteineris = (cont == 1) ? Container::Vector : Container::List;
-    return MeniuAts{ ivestis, name, konteineris};    // grąžinama įvesčių
+    return MeniuAts{ ivestis, name, konteineris};    // grąžinami naudotojo pasirinkimai/įvestys
 }
 
-int VienasDu() {
+int VienasDu() {    // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
     int ivestis;
     cout << "Iveskite, savo pasirinkima: "; cin >> ivestis;
     while (true) {
@@ -59,7 +59,7 @@ int VienasDu() {
     }
 }
 
-int tikNr() {
+int tikNr() {   // funkcija patikrai, kad įvestis yra skaičius didesnis už 0
     int ivestis;
     cin >> ivestis;
     while (true) {
@@ -72,7 +72,7 @@ int tikNr() {
     }
 }
 
-Studentas ivesk() {
+Studentas ivesk() { // studentų įvesties fukcija
     Studentas laik;
     int sum = 0, nd, paz, pasirinkimas; // sum - studento pažymių suma; nd - studento pažymių kiekis; paz - įvedamas pažymys 
     string ivestis; // ivestis naudojama rankiniu budu ivedant namu darbu pazymius
@@ -137,7 +137,7 @@ Studentas ivesk() {
 }
 
 template<typename cont>
-void NuskaitymasIsFailo(cont& grupe, string name) {
+void NuskaitymasIsFailo(cont& grupe, string name) { // funkcija duomenų nuskaitymui iš failo
     Studentas laik;
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";  // failo kelio sudarymas
     ifstream df(failas);
@@ -180,7 +180,7 @@ void NuskaitymasIsFailo(cont& grupe, string name) {
 }
 
 template<typename cont>
-void IsvedimasIFaila(cont& grupe, string name) {
+void IsvedimasIFaila(cont& grupe, string name) {    // funkcija rezultatų išvedimui į failą
     string failas = "C:/Users/ugiri/Desktop/uni/MIF/Obj. programavimas/testavimo failai/" + name + ".txt";
     ofstream rf(failas);
     cout << string(50, '-') << endl;
@@ -192,14 +192,14 @@ void IsvedimasIFaila(cont& grupe, string name) {
 }
 
 template<typename cont>
-void IsvedimasITerminala(cont& grupe) {
+void IsvedimasITerminala(cont& grupe) { // funckija rezultatų išvedimui į terminalą
     cout << left << setw(17) << "Vardas" << setw(17) << "Pavarde" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << setw(20) << "Adresas" << endl;
     for (const auto& temp : grupe) { // studentų duomenų išvedimas į terminalą
         cout << left << setw(17) << temp.vardas << setw(17) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << static_cast<const void*>(&temp) << endl;
     }
 }
 
-float mediana(vector<int>& pazymiai) {
+float mediana(vector<int>& pazymiai) {  // medianos apskaičiavimo funkcija
     int nd;
     sort(pazymiai.begin(), pazymiai.end()); // studento namų darbų pažymių vektoriaus surūšiavimas didėjimo tvarka
     nd = pazymiai.size();
@@ -209,7 +209,7 @@ float mediana(vector<int>& pazymiai) {
     else return (pazymiai[(nd / 2) - 1] + pazymiai[nd / 2]) / 2.0;
 }
 
-void FailuGeneravimas(string name) {
+void FailuGeneravimas(string name) {    // studentų duomenų failų generavimo funkcija
     random_device rd;   //
     mt19937 gen(rd());  // "random" engine kodas
     uniform_int_distribution<> dist(1, 10); // random funkcijos algoritmo ribos (1-10)
@@ -243,8 +243,8 @@ void FailuGeneravimas(string name) {
 }
 
 template<typename cont>
-void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai) {
-    for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kiiatekus
+void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai) {   // studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
+    for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kietiakus
         if (temp.rez < 5) {
             vargsiukai.push_back(temp);
         }
@@ -255,26 +255,26 @@ void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai) {
 }
 
 template<typename cont>
-void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name) {
+void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name) { // failų greičio spartos analizės funkcija
     Timer skaitymas;    // skaitymo laikmačio pradžia
     NuskaitymasIsFailo(grupe, name);
-    skaitymas.save(" irasu failo nuskaitymo trukme: ", grupe.size());
-    Timer kategorizacija;   // kateforizacijos laikmačio pradžia
+    skaitymas.save(" irasu failo nuskaitymo trukme: ", grupe.size());   // skaitymo trukmės išsaugojimas
+    Timer kategorizacija;   // kategorizacijos laikmačio pradžia
     StudentuKategorizacija(grupe, vargsiukai, kietiakai);
-    kategorizacija.save(" irasu failo kategorizacijos trukme: ", grupe.size());
+    kategorizacija.save(" irasu failo kategorizacijos trukme: ", grupe.size()); // kategorizacijos trukmės išsaugojimas
     StudentuRusiavimas(vargsiukai, "Vargsiukai");
     StudentuRusiavimas(kietiakai, "Kietiakai");
-    Timer isvedimasVarg;
+    Timer isvedimasVarg;    // Vargšiukų išvedimo laikmačio pradžia
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
-    isvedimasVarg.save(" vargsiuku rusiavimo trukme: ", vargsiukai.size());
-    Timer isvedimasKiet;
+    isvedimasVarg.save(" vargsiuku rusiavimo trukme: ", vargsiukai.size()); // Vargšiukų išvedimo trukmės išsaugojimas
+    Timer isvedimasKiet;    // Kietiakų išvedimo laikmačio pradžia
     IsvedimasIFaila(kietiakai, "Kietiakai");
-    isvedimasKiet.save(" kietiaku isvedimo trukme: ", kietiakai.size());
+    isvedimasKiet.save(" kietiaku isvedimo trukme: ", kietiakai.size());    // Kietiakų išvedimo trukmės išsaugojimas
     cout << string(50, '-') << endl;
     cout << string(19, '-') << " Rezultatai " << string(19, '-') << endl;
     cout << '\t' << name << ".txt testavimo laikai:\n";
-    Timer::printAll();
-    Timer::clearAll();
+    Timer::printAll();  // visų laiko trukių išvedimas
+    Timer::clearAll();  // laiko trukmių saugyklos išvalymas
 }
 
 template<typename cont>
@@ -294,21 +294,21 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
         else break;
     }
     Timer rusiavimas;
-    if constexpr (std::is_same_v<cont, list<Studentas>>) {
+    if constexpr (std::is_same_v<cont, list<Studentas>>) {  // veiksmai su list konteineriu
         if (ivestis == 1) {
-            grupe.sort([](auto& a, auto& b) { return a.vardas < b.vardas; });
+            grupe.sort([](auto& stud1, auto& stud2) { return stud1.vardas < stud2.vardas; });   // veiksmai studentus surušiuojant abecelės didėjimo tvarka
         }
         else if (ivestis == 2) {
-            grupe.sort([](auto& a, auto& b) { return a.vardas > b.vardas; });
+            grupe.sort([](auto& stud1, auto& stud2) { return stud1.vardas > stud2.vardas; });   // veiksmai studentus surušiuojant abecelės mažėjimo tvarka
         }
         else if (ivestis == 3) {
-            grupe.sort([](auto& a, auto& b) { return a.rez < b.rez;    });
+            grupe.sort([](auto& stud1, auto& stud2) { return stud1.rez < stud2.rez;    });  // veiksmai studentus surušiuojant pagal galutinį vidurkį didėjimo tvarka
         }
         else if (ivestis == 4) {
-            grupe.sort([](auto& a, auto& b) { return a.rez > b.rez;    });
+            grupe.sort([](auto& stud1, auto& stud2) { return stud1.rez > stud2.rez;    });  // veiksmai studentus surušiuojant pagal galutinį vidurkį mažėjimo tvarka
         }
     }
-    else {
+    else {  // veiksmai su vector konteineriu
         if (ivestis == 1) {
             stable_sort(grupe.begin(), grupe.end(), [](const Studentas& stud1, const Studentas& stud2) {   // veiksmai studentus surušiuojant abecelės didėjimo tvarka
                 return stud1.vardas < stud2.vardas;
