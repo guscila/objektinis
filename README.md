@@ -1,7 +1,7 @@
-# v0.2
+# v0.3
 
 ## Versijos aprašymas
-Versija [v0.1](https://github.com/guscila/objektinis/tree/v0.1-nauja) papildyta funkcija leidžiančia naudotojui sugeneruoti studentų duomenų failus pagal žemiau pateiktą šabloną ( *žr. 'Programos įvesties/generavimo failų formatas'* ). Taip pat, programa papildyta failų spartos analizės funkcija leidžiančia testuoti failus bei sužinoti jų nuskaitymo, duomenų rūšiavimo bei išvedimo į failus spartas. Be to, pridėta funkcija leidžianti naudotojui pasirinkti išvedimo failo rūšiavimo parametrą. Galiausiai, programoje atliktas refactoring'as - struktūros bei funkcijos perkeltos į atskirus failus; sutvarkytas meniu; funkcijoms suteikti aiškesni pavadinimai. <br>
+Versija [v0.2](https://github.com/guscila/objektinis/tree/v0.2) optimizuota ir papildyta galimybe pasirinkti norimą naudoti konteinerį ( Vector arba List ) atliekant veiksmus su duomenimis. Taip pat, programa papildyta funkcija leidžiančia įvestų studentų duomenis išvesti į terminalą bei pateikianti jų saugojimo atmintyje adresus. Programos Timer'is papildytas saugojimo bei visų laiko trukmių išvedimo funkcijomis. Be to, failų spartos analizės funkcija papildyta studentų kategorizacijos bei išvedimo į failus spartos apskaičiavimu. Taip pat, sukurta Meniu struktūra. <br>
 ## Programos failai:
 ### Programos įvesties/generavimo failų formatas:
 Vardas1 / Pavarde1 / ND1 / ND2 / ... / Egz. <br>
@@ -10,9 +10,12 @@ Jonas / Jonaitis / 8 / 9 / ... / 9 <br>
 ```
 Visi programa sugeneruoti failai buvo sukurti su 5 namų darbų pažymiais studentui.
 ```
-### Programos rezultatų/išvedimo failų formatas:
+### Programos išvedimo failų formatas:
 Vardas1 / Pavarde1 / Galutinis(Vid.) / Galutinis(Med.) <br>
 Jonas / Jonaitis / 7.80 / 8.00 <br>
+### Programos rezultatų terminale formatas:
+Vardas1 / Pavarde1 / Galutinis(Vid.) / Galutinis(Med.) / Adresas <br>
+Jonas / Jonaitis / 7.80 / 8.00 / 0000000000A000A0 <br>
 ### Programa testuoti failai:
 * Užduotyje pateikti failai:
   * "studentai10000.txt" - 10 tūkst. studentų <br>
@@ -26,20 +29,22 @@ Jonas / Jonaitis / 7.80 / 8.00 <br>
   * "1000000studentu.txt" - 1 mln. studentų <br>
   * "10000000studentu.txt" - 10 mln. studentų <br>
 ## Greičio spartos analizė:
-| Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | Išvedimas į failą (*'Kietiakai'* (rez>=5))  | Išvedimas į failą (*'Vargšiukai'* (rez<5)) |
-|:-----------------------|:----------------|:--------------------|:------------------------|:----------------------------|:-----------------------------------------------------------|
-| studentai10000.txt     | -               | 0.058 s             | 0.003 s                 | 0.026 s                     | 0.019 s                                                    |
-| studentai100000.txt    | -               | 0.656 s             | 0.03 s                  | 0.22 s                      | 0.155 s                                                    |
-| studentai1000000.txt   | -               | 3.525 s             | 0.266 s                 | 2.241 s                     | 1.519 s                                                    |
-| kursiokai.txt          | -               | 0.001 s             | 0.00002 s               | 0.001 s                     | 0.002 s                                                    |
-|                        |                 |                     |                         |                             |                                                            |
-| 1000studentu.txt       | 0.011 s         | 0.004 s             | 0.0003 s                | 0.004 s                     | 0.004 s                                                    |
-| 10000studentu.txt      | 0.043 s         | 0.025 s             | 0.002 s                 | 0.025 s                     | 0.019 s                                                    |
-| 100000studentu.txt     | 0.435 s         | 0.294 s             | 0.032 s                 | 0.218 s                     | 0.15 s                                                     |
-| 1000000studentu.txt    | 4.323 s         | 2.433 s             | 0.321 s                 | 2.221 s                     | 1.5 s                                                      |
-| 10000000studentu.txt   | 42.89 s         | 23.903 s            | 6.856 s                 | 22.169 s                    | 16.193 s                                                   |
+| Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
+|:-----------------------|:----------------|:--------------------|:------------------------|:------------------------|:-------------------------|:-----------------------------------|:---------------------------------------------|
+| studentai10000.txt     | -               |  s             |  s                 |  s                     |  s                                                    |  s |  s
+| studentai100000.txt    | -               |  s             |  s                  |  s                      |  s                                                    |  s |  s
+| studentai1000000.txt   | -               |  s             |  s                 |  s                     |  s                                                    |  s |  s
+| kursiokai.txt          | -               |  s             |  s               |  s                     |  s                                                    |  s |  s
+|                        |                 |                |                         |                         |                          |                                    |                                              |
+| 1000studentu.txt       | 0.011 s         |  s             |  s                |  s                     |  s                                                    |  s |  s
+| 10000studentu.txt      | 0.043 s         |  s             |  s                 |  s                     |  s                                                    |  s |  s
+| 100000studentu.txt     | 0.435 s         |  s             |  s                 |  s                     |  s                                                     |  s |  s
+| 1000000studentu.txt    | 4.323 s         |  s             |  s                 |  s                     |  s                                                      |  s |  s
+| 10000000studentu.txt   | 42.89 s         |  s             |  s                 |  s                    |  s                                                   |  s       |  s
 
 ##### Komentaras:
 ```
+1 - Kietiakas - tai studentas, kurio galurinis vidurkis >=5;
+2 - Vargšiukas - tai studentas, kurio galutinis vidurkis < 5;
 Greičio spartos analizės lentelėje pateikti 3 testavimų laikų vidurkiai.
 ```
