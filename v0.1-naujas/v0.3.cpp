@@ -48,10 +48,13 @@ int main()
                 grupe.push_back(ivesk());   // studento duomenų įvesties funkcijos iškvietimas
                 cout << string(50, '-') << endl;
             }
+            IsvedimasITerminala(grupe);  // failo įrašymo funkcijos iškvietimas
         }
         else if (pasirinkimas == 2) {
             cout << string(50, '-') << endl;
             NuskaitymasIsFailo(grupe, name);   // failo nuskaitymo funkcijos iškvietimas
+            IsvedimasIFaila(grupe, "rezultatai");  // failo įrašymo funkcijos iškvietimas
+            return 0;
         }
         else if (pasirinkimas == 3) {
             cout << string(50, '-') << endl;
@@ -62,7 +65,6 @@ int main()
             FailuTestavimas(grupe, vargsiukai, kietiakai, name);    // failų testavimo funkcijos iškvietimas
             return 0;
         }
-        IsvedimasIFaila(grupe, "rezultatai");  // failo įrašymo funkcijos iškvietimas
         return 0;
     }
 }
