@@ -189,7 +189,6 @@ void IsvedimasIFaila(cont& grupe, string name) {
         rf << left << setw(17) << temp.vardas << setw(17) << temp.pavarde << setw(20) << fixed << setprecision(2) << temp.rez << setw(20) << fixed << setprecision(2) << temp.mediana << endl;
     rf.close();
     cout << "Rezultatai sekmingai irasyti i faila '" << name << ".txt' aplanke 'testavimo failai'." << endl;
-    cout << string(50, '-') << endl;
 }
 
 template<typename cont>
@@ -263,12 +262,8 @@ void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name
     Timer kategorizacija;   // kateforizacijos laikmačio pradžia
     StudentuKategorizacija(grupe, vargsiukai, kietiakai);
     kategorizacija.save(" irasu failo kategorizacijos trukme: ", grupe.size());
-    Timer rusiavimasVarg;
     StudentuRusiavimas(vargsiukai, "Vargsiukai");
-    rusiavimasVarg.save(" vargsiuku surusiavimo trukme: ", vargsiukai.size());
-    Timer rusiavimasKiet;
     StudentuRusiavimas(kietiakai, "Kietiakai");
-    rusiavimasKiet.save(" kietiaku surusiavimo trukme: ", kietiakai.size());
     Timer isvedimasVarg;
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
     isvedimasVarg.save(" vargsiuku rusiavimo trukme: ", vargsiukai.size());
@@ -276,8 +271,10 @@ void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name
     IsvedimasIFaila(kietiakai, "Kietiakai");
     isvedimasKiet.save(" kietiaku isvedimo trukme: ", kietiakai.size());
     cout << string(50, '-') << endl;
-    cout << name << ".txt testavimo laikai:\n";
+    cout << string(19, '-') << " Rezultatai " << string(19, '-') << endl;
+    cout << '\t' << name << ".txt testavimo laikai:\n";
     Timer::printAll();
+    Timer::clearAll();
 }
 
 template<typename cont>
@@ -296,6 +293,7 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
         if (ivestis > 5) cout << "Neteisinga ivestis. Bandykite vel: ";
         else break;
     }
+    Timer rusiavimas;
     if constexpr (std::is_same_v<cont, list<Studentas>>) {
         if (ivestis == 1) {
             grupe.sort([](auto& a, auto& b) { return a.vardas < b.vardas; });
@@ -332,4 +330,6 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
                 });
         }
     }
+    string text = " irasu " + name + ".txt failo surusiavimo trukme: ";
+    rusiavimas.save(text, grupe.size());
 }
