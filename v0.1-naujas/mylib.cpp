@@ -266,10 +266,10 @@ void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name
     StudentuRusiavimas(kietiakai, "Kietiakai");
     Timer isvedimasVarg;    // Vargšiukų išvedimo laikmačio pradžia
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
-    isvedimasVarg.save(" vargsiuku rusiavimo trukme: ", vargsiukai.size()); // Vargšiukų išvedimo trukmės išsaugojimas
+    isvedimasVarg.save(" Vargsiukai isvedimo trukme: ", vargsiukai.size()); // Vargšiukų išvedimo trukmės išsaugojimas
     Timer isvedimasKiet;    // Kietiakų išvedimo laikmačio pradžia
     IsvedimasIFaila(kietiakai, "Kietiakai");
-    isvedimasKiet.save(" kietiaku isvedimo trukme: ", kietiakai.size());    // Kietiakų išvedimo trukmės išsaugojimas
+    isvedimasKiet.save(" Kietiakai isvedimo trukme: ", kietiakai.size());    // Kietiakų išvedimo trukmės išsaugojimas
     cout << string(50, '-') << endl;
     cout << string(19, '-') << " Rezultatai " << string(19, '-') << endl;
     cout << '\t' << name << ".txt testavimo laikai:\n";
@@ -330,6 +330,6 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
                 });
         }
     }
-    string text = " irasu " + name + ".txt failo surusiavimo trukme: ";
+    string text = " irasu " + name + " surusiavimo trukme: ";
     rusiavimas.save(text, grupe.size());
 }
