@@ -32,8 +32,12 @@ Visi programa sugeneruoti failai buvo sukurti su 5 namų darbų pažymiais stude
   * "100000studentu.txt" - 100 tūkst. studentų <br>
   * "1000000studentu.txt" - 1 mln. studentų <br>
   * "10000000studentu.txt" - 10 mln. studentų <br>
+### Testavimo sistemos parametrai:
+CPU: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz (2.42 GHz) <br>
+RAM: 8.00 GB <br>
+HDD: SSD 238 GB <br>
 ## Greičio spartos analizė:
-### Testavimo laikai veiksmus atliektant su vektoriaus (vector) konteineriu
+### Testavimo laikai veiksmus atliektant su vektoriaus (vector) konteineriu:
 | Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
 |:-----------------------|:----------------|:--------------------|:------------------------|:------------------------------------|:-------------------------------------|:-----------------------------------------------|:-----------------------------------------------|
 | studentai10000.txt     | -               | 0,055 s             | 0,003 s                 | 0,004 s                             | 0,001 s                              | 0,023 s                                        | 0,018 s                                        |
@@ -47,7 +51,7 @@ Visi programa sugeneruoti failai buvo sukurti su 5 namų darbų pažymiais stude
 | 10000000studentu.txt   | 42.89 s         | 22,458 s            | 3,067 s                 | 3,213 s                             | 2,09 s                               | 25,029 s                                       | 15,467 s                                       |
 <br>
 
-### Testavimo laikai veiksmus atliektant su sąrašo (list) konteineriu
+### Testavimo laikai veiksmus atliektant su sąrašo (list) konteineriu:
 | Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
 |:-----------------------|:----------------|:--------------------|:------------------------|:------------------------------------|:-------------------------------------|:-----------------------------------------------|:-----------------------------------------------|
 | studentai10000.txt     | -               | 0,054 s             | 0,002 s                 | 0,001 s                             | 0,001 s                              | 0,025 s                                        | 0,018 s                                        |
@@ -66,5 +70,6 @@ Visi programa sugeneruoti failai buvo sukurti su 5 namų darbų pažymiais stude
 2 - Vargšiukas - tai studentas, kurio galutinis vidurkis < 5;
 Greičio spartos analizės lentelėse pateikti 3 testavimų laikų vidurkiai.
 ```
-### Greičio spartos analizės rezultatų išvedimo pavyzdys
+### Greičio spartos analizės išvados:
+Atlikus greičio spartos analizę galime matyti, kad abiejų konteinerių greičio spartos rezultatai yra labai panašūs. Tačiau sąrašo tipo konteineris (list) sparčiau atlieka duomenų nuskaitymą iš failo bei šių duomenų kategorizaciją. Tuo tarpu vektoriaus tipo konteineris (vector) yra spartesnis duomenis išvedant į failą. <br>
 
