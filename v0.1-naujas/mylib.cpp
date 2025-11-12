@@ -294,7 +294,7 @@ void StudentuRusiavimas(cont& grupe, string name) {    // studentų rūšiavimo 
         else break;
     }
     Timer rusiavimas;
-    if constexpr (std::is_same_v<cont, list<Studentas>>) {  // veiksmai su list konteineriu
+    if constexpr (is_same_v<cont, list<Studentas>>) {  // veiksmai su list konteineriu
         if (ivestis == 1) {
             grupe.sort([](auto& stud1, auto& stud2) { return stud1.vardas < stud2.vardas; });   // veiksmai studentus surušiuojant abecelės didėjimo tvarka
         }

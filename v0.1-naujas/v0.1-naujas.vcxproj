@@ -125,7 +125,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="mylib.cpp" />
-    <ClCompile Include="templates.cpp" />
     <ClCompile Include="v0.3.cpp" />
   </ItemGroup>
   <ItemGroup>
