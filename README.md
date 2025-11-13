@@ -3,4 +3,4 @@
 * [v0.1](https://github.com/guscila/objektinis/tree/v0.1-nauja) <br>
 * [v0.2](https://github.com/guscila/objektinis/tree/v0.2) <br>
 * [v0.3](https://github.com/guscila/objektinis/tree/v0.3) <br>
-* [v1.0]()
+* [v1.0](https://github.com/guscila/objektinis/tree/v1.0) <br>
