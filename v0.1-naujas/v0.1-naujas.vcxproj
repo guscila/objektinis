@@ -125,7 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="mylib.cpp" />
-    <ClCompile Include="v0.3.cpp" />
+    <ClCompile Include="v1.0.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="funkcijos.h" />

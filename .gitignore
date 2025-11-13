@@ -5,6 +5,8 @@
 
 #Ignoring all .txt files
 *.txt
+*.filters
+*.user
 
 # User-specific files
 *.rsuser

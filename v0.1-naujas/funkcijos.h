@@ -56,7 +56,7 @@ void IsvedimasITerminala(cont& grupe);	// funckija rezultatų išvedimui į term
 float mediana(vector<int>& pazymiai);   // medianos apskaičiavimo funkcija
 void FailuGeneravimas(string name);	// studentų duomenų failų generavimo funkcija
 template<typename cont>
-void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai);	// studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
+void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai, int strategija);	// studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
 template<typename cont>
 void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name, int strategija);	// failų greičio spartos analizės funkcija
 template<typename cont>
@@ -67,10 +67,10 @@ template void NuskaitymasIsFailo<vector<Studentas>>(vector<Studentas>&, string);
 template void NuskaitymasIsFailo<list<Studentas>>(list<Studentas>&, string);
 template void IsvedimasIFaila<vector<Studentas>>(vector<Studentas>&, string);
 template void IsvedimasIFaila<list<Studentas>>(list<Studentas>&, string);
-template void StudentuKategorizacija<vector<Studentas>>(vector<Studentas>&, vector<Studentas>&, vector<Studentas>&);
-template void StudentuKategorizacija<list<Studentas>>(list<Studentas>&, list<Studentas>&, list<Studentas>&);
-template void FailuTestavimas<vector<Studentas>>(vector<Studentas>&, vector<Studentas>&, vector<Studentas>&, string, int strategija);
-template void FailuTestavimas<list<Studentas>>(list<Studentas>&, list<Studentas>&, list<Studentas>&, string, int strategija);
+template void StudentuKategorizacija<vector<Studentas>>(vector<Studentas>&, vector<Studentas>&, vector<Studentas>&, int);
+template void StudentuKategorizacija<list<Studentas>>(list<Studentas>&, list<Studentas>&, list<Studentas>&, int);
+template void FailuTestavimas<vector<Studentas>>(vector<Studentas>&, vector<Studentas>&, vector<Studentas>&, string, int);
+template void FailuTestavimas<list<Studentas>>(list<Studentas>&, list<Studentas>&, list<Studentas>&, string, int);
 template void StudentuRusiavimas<vector<Studentas>>(vector<Studentas>&, string);
 template void StudentuRusiavimas<list<Studentas>>(list<Studentas>&, string);
 template void IsvedimasITerminala<vector<Studentas>>(vector<Studentas>&);

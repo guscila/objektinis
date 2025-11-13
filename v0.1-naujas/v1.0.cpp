@@ -31,7 +31,7 @@ int main()
             return 0;
         }
         else if (pasirinkimas == 4) {
-            int strategija = m.strategija;
+            int strategija = m.strategija;  // naudotojo pasirinkta strategija
             FailuTestavimas(grupe, vargsiukai, kietiakai, name, strategija);    // failų testavimo funkcijos iškvietimas
             return 0;
         }
@@ -63,7 +63,7 @@ int main()
             return 0;
         }
         else if (pasirinkimas == 4) {
-            int strategija = m.strategija;
+            int strategija = m.strategija;  // naudotojo pasirinkta strategija
             FailuTestavimas(grupe, vargsiukai, kietiakai, name, strategija);    // failų testavimo funkcijos iškvietimas
             return 0;
         }
