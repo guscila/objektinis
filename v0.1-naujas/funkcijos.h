@@ -42,7 +42,6 @@ using std::cerr;
 using std::numeric_limits;
 using std::streamsize;
 using std::list;
-using std::move;
 
 MeniuAts meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
