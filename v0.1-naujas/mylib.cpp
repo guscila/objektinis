@@ -274,14 +274,14 @@ void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai, int 
     else if (strategija == 2) {
         if constexpr (std::is_same_v<cont, std::list<Studentas>>) {
             for (auto it = grupe.begin(); it != grupe.end();) {
-                auto now = it;
-                it++;
-                if (now->rez < 5.0) {
-                    vargsiukai.splice(vargsiukai.end(), grupe, now);
+                if (it->rez < 5.0) {
+                    vargsiukai.push_back(*it);
+                    it = grupe.erase(it);
                 }
+                else it++;
             }
         }
-        else if constexpr (std::is_same_v<cont, std::vector<Studentas>>){
+        else {
             size_t i = 0;
             while (i < grupe.size()) {
                 if (grupe[i].rez < 5.0) {
@@ -294,7 +294,15 @@ void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai, int 
         }
     }
     else if (strategija == 3) {
-
+        auto kietas = [](const Studentas& stud) { return stud.rez >= 5.0; };
+        auto atskirtis = std::partition(grupe.begin(), grupe.end(), kietas);
+        if constexpr (std::is_same_v<cont, std::list<Studentas>>) {
+            vargsiukai.splice(vargsiukai.end(), grupe, atskirtis, grupe.end());
+        }
+        else {
+            vargsiukai.insert(vargsiukai.end(), std::make_move_iterator(atskirtis), std::make_move_iterator(grupe.end()));
+            grupe.erase(atskirtis, grupe.end());
+        }
     }
 }
 
