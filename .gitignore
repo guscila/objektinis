@@ -5,8 +5,9 @@
 
 #Ignoring all .txt files
 *.txt
-*.filters
-*.user
+*.vcxproj.filters
+*.vcxproj.user
+*.vcxproj
 
 # User-specific files
 *.rsuser
