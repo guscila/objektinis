@@ -1,11 +1,11 @@
 ﻿#include "funkcijos.h"
 #include "meniu.h"
-#include "templates.cpp"
 
 MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimus
     int ivestis;    // naudotojo įvestis
     string name;
     int cont; // konteinerio pasirinkimas
+    int strat;  // strategijos pasirinkimas
     cout << string(21, '-') << " Meniu " << string(22, '-') << endl;
     cout << "1 - ivesti studentu duomenis ir balus rankiniu budu;\n";
     cout << "2 - duomenis nuskaityti is failo;\n";
@@ -29,7 +29,7 @@ MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimus
     }
     cout << string(50, '-') << endl;
     if (ivestis == 1 ) {}
-    else if (ivestis == 2 || ivestis == 4) {
+    else if (ivestis == 2) {
         cout << "Iveskite failo pavadinima, kuri norite nuskaityti:\n";
         cin >> name;
         cout << string(50, '-') << endl;
@@ -38,6 +38,22 @@ MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimus
         cout << "Iveskite failo pavadinima, kuri norite sugeneruoti:\n";
         cin >> name;
         cout << string(50, '-') << endl;
+    }
+    else if (ivestis == 4) {
+        cout << "Iveskite failo pavadinima, kuri norite nuskaityti:\n";
+        cin >> name;
+        cout << string(50, '-') << endl;
+        cout << "Pasirinkite norima naudoti dalijimo i dvi kategorijas strategija:\n";
+        cout << "strategija 1 - studentu skaidymas i du konteinerius;\n";
+        cout << "strategija 2 - studentu perkelimas i antra vektoriu;\n";
+        cout << "strategija 3 - efektyvi strategija;\n";
+        while (true) {
+            strat = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
+            if (strat > 3) cout << "Neteisinga ivestis. Bandykite vel: ";
+            else break;
+        }
+        Container konteineris = (cont == 1) ? Container::Vector : Container::List;
+        return MeniuAts{ ivestis, name, konteineris, strat };    // grąžinami naudotojo pasirinkimai/įvestys
     }
     Container konteineris = (cont == 1) ? Container::Vector : Container::List;
     return MeniuAts{ ivestis, name, konteineris};    // grąžinami naudotojo pasirinkimai/įvestys
@@ -243,33 +259,69 @@ void FailuGeneravimas(string name) {    // studentų duomenų failų generavimo 
 }
 
 template<typename cont>
-void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai) {   // studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
-    for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kietiakus
-        if (temp.rez < 5) {
-            vargsiukai.push_back(temp);
+void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai, int strategija) {   // studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
+    if (strategija == 1) {
+        for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kietiakus
+            if (temp.rez < 5.0) {
+                vargsiukai.push_back(temp);
+            }
+            else if (temp.rez >= 5.0) {
+                kietiakai.push_back(temp);
+            }
         }
-        else if (temp.rez >= 5) {
-            kietiakai.push_back(temp);
+    }
+    else if (strategija == 2) {
+        if constexpr (std::is_same_v<cont, std::list<Studentas>>) {
+            for (auto it = grupe.begin(); it != grupe.end();) {
+                auto now = it++;
+                if (it->rez < 5.0) {
+                    vargsiukai.splice(vargsiukai.end(), grupe, now);
+                }
+            }
         }
+        else if constexpr (std::is_same_v<cont, std::vector<Studentas>>){
+            size_t i = 0;
+            while (i < grupe.size()) {
+                if (grupe[i].rez < 5.0) {
+                    vargsiukai.push_back(std::move(grupe[i]));
+                    grupe[i] = std::move(grupe.back());
+                    grupe.pop_back();
+                }
+                else i++;
+            }
+        }
+    }
+    else if (strategija == 3) {
+
     }
 }
 
 template<typename cont>
-void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name) { // failų greičio spartos analizės funkcija
+void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name, int strategija) { // failų greičio spartos analizės funkcija
     Timer skaitymas;    // skaitymo laikmačio pradžia
     NuskaitymasIsFailo(grupe, name);
     skaitymas.save(" irasu failo nuskaitymo trukme: ", grupe.size());   // skaitymo trukmės išsaugojimas
+    int originalSize = grupe.size();
     Timer kategorizacija;   // kategorizacijos laikmačio pradžia
-    StudentuKategorizacija(grupe, vargsiukai, kietiakai);
-    kategorizacija.save(" irasu failo kategorizacijos trukme: ", grupe.size()); // kategorizacijos trukmės išsaugojimas
+    StudentuKategorizacija(grupe, vargsiukai, kietiakai, strategija);
+    kategorizacija.save(" irasu failo kategorizacijos trukme: ", originalSize); // kategorizacijos trukmės išsaugojimas
     StudentuRusiavimas(vargsiukai, "Vargsiukai");
-    StudentuRusiavimas(kietiakai, "Kietiakai");
+    if (strategija == 1) {
+        StudentuRusiavimas(kietiakai, "Kietiakai");
+    }
+    else StudentuRusiavimas(grupe, "Kietiakai");
     Timer isvedimasVarg;    // Vargšiukų išvedimo laikmačio pradžia
     IsvedimasIFaila(vargsiukai, "Vargsiukai");
     isvedimasVarg.save(" Vargsiukai isvedimo trukme: ", vargsiukai.size()); // Vargšiukų išvedimo trukmės išsaugojimas
     Timer isvedimasKiet;    // Kietiakų išvedimo laikmačio pradžia
-    IsvedimasIFaila(kietiakai, "Kietiakai");
-    isvedimasKiet.save(" Kietiakai isvedimo trukme: ", kietiakai.size());    // Kietiakų išvedimo trukmės išsaugojimas
+    if (strategija == 1) {
+        IsvedimasIFaila(kietiakai, "Kietiakai");
+    }
+    else IsvedimasIFaila(grupe, "Kietiakai");
+    if (strategija == 1) {
+        isvedimasKiet.save(" Kietiakai isvedimo trukme: ", kietiakai.size());    // Kietiakų išvedimo trukmės išsaugojimas
+    }
+    else     isvedimasKiet.save(" Kietiakai isvedimo trukme: ", grupe.size());    // Kietiakų išvedimo trukmės išsaugojimas
     cout << string(50, '-') << endl;
     cout << string(19, '-') << " Rezultatai " << string(19, '-') << endl;
     cout << '\t' << name << ".txt testavimo laikai:\n";

@@ -6,6 +6,7 @@ enum class Container {Vector, List};
 
 struct MeniuAts {	// meniu struktūra
 	int pasirinkimas;
-	std::string name;
+	string name;
 	Container konteineris;
+	int strategija;
 };

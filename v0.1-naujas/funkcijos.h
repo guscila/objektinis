@@ -13,6 +13,7 @@
 #include <utility>
 #include <list>
 #include <type_traits>
+#include <iterator>
 
 #include "studentas.h"
 #include "Timer.h"
@@ -41,6 +42,7 @@ using std::cerr;
 using std::numeric_limits;
 using std::streamsize;
 using std::list;
+using std::move;
 
 MeniuAts meniu();    // meniu funkcija
 int VienasDu(); // funkcija patikrai, kad meniu įvestis būtų 1 arba 2
@@ -57,20 +59,20 @@ void FailuGeneravimas(string name);	// studentų duomenų failų generavimo funk
 template<typename cont>
 void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai);	// studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
 template<typename cont>
-void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name);	// failų greičio spartos analizės funkcija
+void FailuTestavimas(cont& grupe, cont& vargsiukai, cont& kietiakai, string name, int strategija);	// failų greičio spartos analizės funkcija
 template<typename cont>
 void StudentuRusiavimas(cont& grupe, string name);	// studentų rūšiavimo funkcija
 
 // templates:
-template void NuskaitymasIsFailo<std::vector<Studentas>>(std::vector<Studentas>&, std::string);
-template void NuskaitymasIsFailo<std::list<Studentas>>(std::list<Studentas>&, std::string);
-template void IsvedimasIFaila<std::vector<Studentas>>(std::vector<Studentas>&, std::string);
-template void IsvedimasIFaila<std::list<Studentas>>(std::list<Studentas>&, std::string);
-template void StudentuKategorizacija<std::vector<Studentas>>(std::vector<Studentas>&, std::vector<Studentas>&, std::vector<Studentas>&);
-template void StudentuKategorizacija<std::list<Studentas>>(std::list<Studentas>&, std::list<Studentas>&, std::list<Studentas>&);
-template void FailuTestavimas<std::vector<Studentas>>(std::vector<Studentas>&, std::vector<Studentas>&, std::vector<Studentas>&, std::string);
-template void FailuTestavimas<std::list<Studentas>>(std::list<Studentas>&, std::list<Studentas>&, std::list<Studentas>&, std::string);
-template void StudentuRusiavimas<std::vector<Studentas>>(std::vector<Studentas>&, std::string);
-template void StudentuRusiavimas<std::list<Studentas>>(std::list<Studentas>&, std::string);
-template void IsvedimasITerminala<std::vector<Studentas>>(std::vector<Studentas>&);
-template void IsvedimasITerminala<std::list<Studentas>>(std::list<Studentas>&);
+template void NuskaitymasIsFailo<vector<Studentas>>(vector<Studentas>&, string);
+template void NuskaitymasIsFailo<list<Studentas>>(list<Studentas>&, string);
+template void IsvedimasIFaila<vector<Studentas>>(vector<Studentas>&, string);
+template void IsvedimasIFaila<list<Studentas>>(list<Studentas>&, string);
+template void StudentuKategorizacija<vector<Studentas>>(vector<Studentas>&, vector<Studentas>&, vector<Studentas>&);
+template void StudentuKategorizacija<list<Studentas>>(list<Studentas>&, list<Studentas>&, list<Studentas>&);
+template void FailuTestavimas<vector<Studentas>>(vector<Studentas>&, vector<Studentas>&, vector<Studentas>&, string, int strategija);
+template void FailuTestavimas<list<Studentas>>(list<Studentas>&, list<Studentas>&, list<Studentas>&, string, int strategija);
+template void StudentuRusiavimas<vector<Studentas>>(vector<Studentas>&, string);
+template void StudentuRusiavimas<list<Studentas>>(list<Studentas>&, string);
+template void IsvedimasITerminala<vector<Studentas>>(vector<Studentas>&);
+template void IsvedimasITerminala<list<Studentas>>(list<Studentas>&);
