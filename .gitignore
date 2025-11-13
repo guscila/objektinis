@@ -5,6 +5,7 @@
 
 #Ignoring all .txt files
 ##*.txt
+*.sln
 *.vcxproj.filters
 *.vcxproj.user
 *.vcxproj
