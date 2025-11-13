@@ -1,5 +1,19 @@
-# v1.0
+# 1Lab.
 
+## Programos aprašymas
+Programa leidžia naudotojui įvesti rankiniu būdu arba nuskaityti studentų duomenis (vardą ir pavardę, atliktų namų darbų rezultatus (10-balėje sistemoje), egzamino balą) ir suskaičiuoja galutinį balą pagal formulę (*pav.1*). Visos programos veikimo metu naudotojas gali pasirinkti kokio tipo ( vector ar list) konteineris bus naudojamas. Įvesdamas duomenis rankiniu būdu naudotojas gali namų darbų ir egzamino rezultatuts įvesti arba atsitiktinai sugeneruoti. Naudotojui taip pat leidžiama sugeneruoti failą su studentų vardais, namų darbų ir egzamino rezultatais, kurį vėliau gali naudoti programos testavimo funkcijos metu. Failų testavimo metu, naudotojui pasirinkus failą, yra atliekama greičio spartos analizė naudojant vieną iš trijų studentų kategorizacijos strategijų bei suteikiant naudotojui pasirinkimą kokia tvarka bus surūšiuoti studentų *'Kietiakų'<sup>1</sup>* ir *'Vargšiukų'<sup>2</sup>* failai.
+```
+1 - Kietiakas - tai studentas, kurio galutinis vidurkis >=5;
+2 - Vargšiukas - tai studentas, kurio galutinis vidurkis < 5;
+```
+*Pav.1:* ![pav.1](https://latex.codecogs.com/svg.image?&space;Galutinis=0.4*vidurkis&plus;0.6*egzaminas)<br>
+## Programos diegimo instrukcija
+<br>
+
+## Programos naudojimo instrukcija
+1. Įdiekite programą.
+2. Programai pradėjus veikti, iš Jums pateikto Meniu reiks išsirinkti kokią programos funkciją norėsite naudoti.
+### Meniu
 ## Versijos aprašymas
 Versija [v0.3](https://github.com/guscila/objektinis/tree/v0.3) optimizuota ir papildyta galimybe pasirinkti norimą naudoti studentų kategorizacijos strategiją bei šiomis strategijomis....... Taip pat, programos papildyta funkcija leidžiančia įvestų studentų duomenis išvesti į terminalą bei pateikianti jų saugojimo atmintyje adresus. Programa papildyta Meniu struktūra ir detalesniu pasirinkimu, o Timer'is papildytas saugojimo bei visų laiko trukmių išvedimo funkcijomis. Be to, failų spartos analizės funkcija papildyta studentų kategorizacijos bei išvedimo į failus spartos apskaičiavimu. <br>
 ## Programos failai:
@@ -37,15 +51,27 @@ CPU: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz (2.42 GHz) <br>
 RAM: 8.00 GB <br>
 HDD: SSD 238 GB <br>
 ## Greičio spartos analizė:
-### Studentų kategorizacijos strategijų testavimas
-| Failas                 | (naudojant 1 strategiją ir vektorius) | (naudojant 1 strategiją ir sąrašus) | (naudojant 2 strategiją ir vektorius) | (naudojant 1 strategiją ir sąrašus) |
+### Strategijos:
+* Strategija 1 - Bendro studentų konteinerio kategorizacija į du naujus konteinerius: *'Kietiakai'<sup>1</sup>* ir *'Vargšiukai'<sup>2</sup>*.
+* Strategija 2 - Bendro studentų konteinerio kategorizacija panaudojant tik vieną naują konteinerį: *'Vargšiukai'<sup>2</sup>*.
+* Strategija 3 - Efektyvioji strategija paremta Strategija 2 bei naudojanti algoritmus siekiant optimizuoti kategorizaciją.
+### Studentų kategorizacijos strategijų testavimas:
+| Failas                 | (naudojant 1 strategiją ir vektorius) | (naudojant 1 strategiją ir sąrašus) | (naudojant 2 strategiją ir vektorius) | (naudojant 2 strategiją ir sąrašus) |
 |:-----------------------|:--------------------------------------------------------------|:------------------------------------------------------------|:--------------------------------------------------------------|:------------------------------------------------------------|
-| studentai10000.txt     | 0,003 s                                                       | 0,002 s                                                     | 0,001 s                                                       | 0,0003 s                                                    |
-| studentai100000.txt    | 0,026 s                                                       | 0,021 s                                                     | 0,007 s                                                       | 0,003 s                                                     |
-| studentai1000000.txt   | 0,274 s                                                       | 0,191 s                                                     | 0,065 s                                                       | 0,028 s                                                     |
+| studentai10000.txt     | 0,003 s                                                       | 0,002 s                                                     | 0,001 s                                                       | 0,001 s                                                     |
+| studentai100000.txt    | 0,026 s                                                       | 0,021 s                                                     | 0,007 s                                                       | 0,008 s                                                     |
+| studentai1000000.txt   | 0,274 s                                                       | 0,191 s                                                     | 0,065 s                                                       | 0,063 s                                                     |
 ```
-Išvados: Antroji studentų kategorizacijos strategija yra žymiai spartesnė. Antrosios strategijos pagrindu buvo sukurta trečioji strategija.
+Išvados: Antroji studentų kategorizacijos strategijų spartos panašios, tačiau antroji šiek tiek spartesnė už pirmąją. Antrosios strategijos pagrindu buvo sukurta trečioji strategija.
 ```
+| Failas                 | (naudojant 3 strategiją ir vektorius) | (naudojant 3 strategiją ir sąrašus) |
+|:-----------------------|:--------------------------------------------------------------|:------------------------------------------------------------|
+| studentai10000.txt     | 0,0002 s                                                      | 0,002 s                                                     |
+| studentai100000.txt    | 0,003 s                                                       | 0,021 s                                                     |
+| studentai1000000.txt   | 0,032 s                                                       | 0,191 s                                                     |
+### Išvados:
+Pritaikius `std::partition` ir `std::make_move_iterator` algoritmus buvo sukurta strategija 3 paremta antrosios strategijos pagrindu. Ši strategija spartesnė ir efektyvesnė už abi ankstesnes strategijas. Trečioji strategija yra efektyvesnė dirbant su vektoriaus tipo konteineriais. 
+<br>
 ### Testavimo laikai veiksmus atliektant su vektoriaus (vector) konteineriu:
 | Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
 |:-----------------------|:----------------|:--------------------|:------------------------|:------------------------------------|:-------------------------------------|:-----------------------------------------------|:-----------------------------------------------|
@@ -75,8 +101,6 @@ Išvados: Antroji studentų kategorizacijos strategija yra žymiai spartesnė. A
 
 ##### Komentaras:
 ```
-1 - Kietiakas - tai studentas, kurio galurinis vidurkis >=5;
-2 - Vargšiukas - tai studentas, kurio galutinis vidurkis < 5;
 Greičio spartos analizės lentelėse pateikti 3 testavimų laikų vidurkiai.
 ```
 ### Greičio spartos analizės išvados:
