@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+project(app CXX)
+set(CMAKE_CXX_STANDARD 17)
+add_executable(app "v1.0.cpp" "mylib.cpp")
+set_target_properties(app PROPERTIES OUTPUT_NAME "v1.0")
