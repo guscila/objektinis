@@ -47,6 +47,7 @@ MeniuAts meniu()  {    // meniu funkcija grąžinanti naudotojo pasirinkimus
         cout << "strategija 1 - studentu skaidymas i du konteinerius;\n";
         cout << "strategija 2 - studentu perkelimas i antra vektoriu;\n";
         cout << "strategija 3 - efektyvi strategija;\n";
+        cout << "Iveskite savo pasirinkima: ";
         while (true) {
             strat = tikNr();  // teigiamo skaičiaus funkcijos iškvietimas
             if (strat > 3) cout << "Neteisinga ivestis. Bandykite vel: ";
@@ -273,8 +274,9 @@ void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai, int 
     else if (strategija == 2) {
         if constexpr (std::is_same_v<cont, std::list<Studentas>>) {
             for (auto it = grupe.begin(); it != grupe.end();) {
-                auto now = it++;
-                if (it->rez < 5.0) {
+                auto now = it;
+                it++;
+                if (now->rez < 5.0) {
                     vargsiukai.splice(vargsiukai.end(), grupe, now);
                 }
             }
