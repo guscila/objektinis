@@ -87,25 +87,51 @@ HDD: SSD 238 GB <br>
 * Strategija 2 - Bendro studentų konteinerio kategorizacija panaudojant tik vieną naują konteinerį: *'Vargšiukai'<sup>2</sup>*.
 * Strategija 3 - Efektyvioji strategija paremta Strategija 2 bei naudojanti algoritmus siekiant optimizuoti kategorizaciją.
 ### Studentų kategorizacijos strategijų testavimas:
-| Failas                 | (naudojant Strategiją 1 ir vektorius) | (naudojant Strategiją 1 ir sąrašus) | (naudojant Strategiją 2 ir vektorius) | (naudojant Strategiją 2 ir sąrašus) |
-|:-----------------------|:--------------------------------------------------------------|:------------------------------------------------------------|:--------------------------------------------------------------|:------------------------------------------------------------|
-| studentai10000.txt     | 0,003 s                                                       | 0,002 s                                                     | 0,001 s                                                       | 0,001 s                                                     |
-| studentai100000.txt    | 0,026 s                                                       | 0,021 s                                                     | 0,007 s                                                       | 0,008 s                                                     |
-| studentai1000000.txt   | 0,274 s                                                       | 0,191 s                                                     | 0,065 s                                                       | 0,063 s                                                     |
+#### Strategija 1
+| Failas                 | Vector   | List     |
+|:-----------------------|:---------|:---------|
+| studentai10000.txt     | 0,003 s  | 0,002 s  |
+| studentai100000.txt    | 0,026 s  | 0,021 s  |
+| studentai1000000.txt   | 0,274 s  | 0,191 s  |
+|                        |          |          |
+| 1000studentu.txt       | 0,0003 s | 0,0003 s |
+| 10000studentu.txt      | 0,002 s  | 0,003 s  |
+| 100000studentu.txt     | 0,026 s  | 0,019 s  |
+| 1000000studentu.txt    | 0,235 s  | 0,176 s  |
+| 10000000studentu.txt   | 7,178 s  | 5,402 s  |
+
+#### Strategija 2
+| Failas                 | Vector   | List     |
+|:-----------------------|:---------|:---------|
+| studentai10000.txt     | 0,003 s  | 0,002 s  |
+| studentai100000.txt    | 0,026 s  | 0,021 s  |
+| studentai1000000.txt   | 0,274 s  | 0,191 s  |
+|                        |          |          |
+| 1000studentu.txt       | 0,0001 s | 0,0001 s |
+| 10000studentu.txt      | 0,001 s  | 0,001 s  |
+| 100000studentu.txt     | 0,006 s  | 0,006 s  |
+| 1000000studentu.txt    | 0,068 s  | 0,061 s  |
+| 10000000studentu.txt   | 0,824 s  | 0,678 s  |
 ```
 Išvados: Antroji studentų kategorizacijos strategijų spartos panašios, tačiau antroji šiek tiek spartesnė už pirmąją. Antrosios strategijos pagrindu buvo sukurta trečioji strategija.
 ```
-| Failas                 | (naudojant Strategiją 3 ir vektorius) | (naudojant Strategiją 3 ir sąrašus) |
-|:-----------------------|:--------------------------------------------------------------|:------------------------------------------------------------|
-| studentai10000.txt     | 0,0002 s                                                      | 0,002 s                                                     |
-| studentai100000.txt    | 0,003 s                                                       | 0,021 s                                                     |
-| studentai1000000.txt   | 0,032 s                                                       | 0,191 s                                                     |
+#### Strategija 3
+| Failas                 | Vector    | List        |
+|:-----------------------|:----------|:------------|
+| studentai10000.txt     | 0,0002 s  | 0,002 s     |
+| studentai100000.txt    | 0,003 s   | 0,021 s     |
+| studentai1000000.txt   | 0,032 s   | 0,191 s     |
+|                        |           |             |
+| 1000studentu.txt       | 0,00005 s | 0,00002 s   |
+| 10000studentu.txt      | 0,0001 s  | 0,0002 s    |
+| 100000studentu.txt     | 0,003 s   | 0,004 s     |
+| 1000000studentu.txt    | 0,028 s   | 0,045 s     |
+| 10000000studentu.txt   | 0,336 s   | 0,568 s     |
 ### Išvados:
-Pritaikius `std::partition`, `std::make_move_iterator` ir `std::list::splice` algoritmus buvo sukurta Strategija 3 paremta antrosios strategijos pagrindu. Ši strategija spartesnė ir efektyvesnė už abi ankstesnes strategijas. Trečioji strategija yra efektyvesnė dirbant su vektoriaus tipo konteineriais. 
+Pritaikius `std::partition`, `std::make_move_iterator` ir `std::list::splice` algoritmus buvo sukurta Strategija 3 paremta antrosios strategijos pagrindu. Ši strategija spartesnė ir efektyvesnė už abi ankstesnes strategijas. Trečioji strategija yra spartesnė ir efektyvesnė dirbant su vektoriaus tipo konteineriais. 
 ```
 Studentų kategorizacijos strategijų testavimas buvo atliktas naudojant v1.0 realizaciją.
 ```
-<br>
 ### Testavimo laikai veiksmus atliektant su vektoriaus (vector) konteineriu:
 | Failas                 | Failo sukūrimas | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
 |:-----------------------|:----------------|:--------------------|:------------------------|:------------------------------------|:-------------------------------------|:-----------------------------------------------|:-----------------------------------------------|
