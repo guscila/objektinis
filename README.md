@@ -8,11 +8,33 @@ Programa leidžia naudotojui įvesti rankiniu būdu arba nuskaityti studentų du
 ```
 *Pav.1:* ![pav.1](https://latex.codecogs.com/svg.image?&space;Galutinis=0.4*vidurkis&plus;0.6*egzaminas)<br>
 ## Programos diegimo instrukcija
-<br>
-
+1. Nukopijuokite projekto direktoriją ir paruošiame "build" direktoriją, kur nukeliaus visi mūsų sukurti failai:
+```
+cd projekto_direktorija
+mkdir build
+cd build
+```
+2. Sugeneruojame projekto failus naudodami CMake:
+```
+cmake ..
+(čia naudojame "cmake ..", nes "CMakeLists.txt" failas yra aukštesnio lygio aplanke)
+```
+3. Kompliuojame programą Release režimu:
+```
+cmake --build . --config Release
+```
+4. Paleidžiame sukurtą programą:
+```
+.\v1.0.exe
+```
+#### Arba galite paleisti šiame projekte prikabintą `run.bat` failą:
+```run.bat``` failą galite paleisti paspaudę ant jo du kartus arba terminale įvedę komandą:
+```
+.\run.bat
+```
 ## Programos naudojimo instrukcija
 1. Įdiekite programą.
-2. Programai pradėjus veikti, iš Jums pateikto Meniu reiks išsirinkti kokią programos funkciją norėsite naudoti.
+2. Programai pradėjus veikti, naudotojas pasirenka iš Meniu norimą naudoti funkciją ir toliau seka Meniu aprašytais nurodymais.
 ### Meniu
 * 1 - Įvesti studentų duomenis rankiniu būdu;<br>
   * 1.1 - Pasirinkti norimą naudoti konteinerį ( vector arba list );<br>
@@ -26,6 +48,7 @@ Programa leidžia naudotojui įvesti rankiniu būdu arba nuskaityti studentų du
   * 4.1 - Pasirinkti norimą naudoti konteinerį ( vector arba list );<br>
     * 4.1.1 - Įvesti failo pavadinimą, kurį norite nuskaityti;<br>
       * 4.1.1.1 - Pasirinkti norimą naudoti studentų kategorizacijos strategiją (1, 2 arba 3);<br>
+3. Programa nustoja veikti, kai yra išvedami rezultatai arba išvedama teksinė/informacinė eilutė, po vieno iš šių įvykių paspaudus bet kurį klaviatūros klavišą programa užsidaro.
 
 ## Ankstesnės versijos
 [v0.1](https://github.com/guscila/objektinis/tree/v0.1-nauja)<br>
@@ -37,7 +60,7 @@ Versija v0.1 optimizuota ir papildyta funkcija leidžiančia naudotojui sugeneru
 #### [v0.3](https://github.com/guscila/objektinis/tree/v0.3) pokyčiai:
 Versija v0.2 optimizuota ir papildyta galimybe pasirinkti norimą naudoti konteinerį; programa papildyta funkcija leidžiančia įvestų studentų duomenis išvesti į terminalą bei pateikianti jų saugojimo atmintyje adresus; programa papildyta Meniu struktūra ir detalesniu pasirinkimu; Timer'is papildytas saugojimo bei visų laiko trukmių išvedimo funkcijomis; failų spartos analizės funkcija papildyta studentų kategorizacijos bei išvedimo į failus spartos apskaičiavimu.
 #### [v1.0](https://github.com/guscila/objektinis/tree/v1.0) pokyčiai:
-Versija v0.3 optimizuota ir papildyta funkcija leidžiančiau naudotojui pasirinkti norimą naudoti studentų kategorizacijos strategiją; parengta įdiegimo instrukcija `cmake`.
+Versija v0.3 optimizuota ir papildyta funkcija leidžiančiau naudotojui pasirinkti norimą naudoti studentų kategorizacijos strategiją; parengta įdiegimo instrukcija su `CMakeLists.txt` ir `run.bat`.
 
 ## Programos failai
 ### Failai
@@ -47,6 +70,8 @@ Versija v0.3 optimizuota ir papildyta funkcija leidžiančiau naudotojui pasirin
 * studentas.h - studento struktūros failas;
 * Timer.h - laiko skaičiavimo funkcijos Timer failas;
 * mylib.cpp - programos funkcijų failas;
+* CMakeLists.txt - programos įdiegimo instrukcijos failas;
+* run.bat - programos paleidimo failas;
 
 ### Programos įvesties/generavimo failų formatas:
 | Vardas1 | Pavarde1 | ND1 | ND2 | ... | Egz. |
@@ -113,7 +138,7 @@ HDD: SSD 238 GB <br>
 | 1000000studentu.txt    | 0,068 s  | 0,061 s  |
 | 10000000studentu.txt   | 0,824 s  | 0,678 s  |
 ```
-Išvados: Antroji studentų kategorizacijos strategijų spartos panašios, tačiau antroji šiek tiek spartesnė už pirmąją. Antrosios strategijos pagrindu buvo sukurta trečioji strategija.
+Išvados: Pirmų dviejų studentų kategorizacijos strategijų spartos panašios, tačiau antroji šiek tiek spartesnė už pirmąją. Antrosios strategijos pagrindu buvo sukurta trečioji strategija.
 ```
 #### Strategija 3
 | Failas                 | Vector    | List        |
@@ -127,8 +152,8 @@ Išvados: Antroji studentų kategorizacijos strategijų spartos panašios, tači
 | 100000studentu.txt     | 0,003 s   | 0,004 s     |
 | 1000000studentu.txt    | 0,028 s   | 0,045 s     |
 | 10000000studentu.txt   | 0,336 s   | 0,568 s     |
-### Išvados:
-Pritaikius `std::partition`, `std::make_move_iterator` ir `std::list::splice` algoritmus buvo sukurta Strategija 3 paremta antrosios strategijos pagrindu. Ši strategija spartesnė ir efektyvesnė už abi ankstesnes strategijas. Trečioji strategija yra spartesnė ir efektyvesnė dirbant su vektoriaus tipo konteineriais. 
+### Studentų kategorizacijos strategijų testavimo išvados:
+Pritaikius `std::partition`, `std::make_move_iterator` ir `std::list::splice` algoritmus buvo sukurta Strategija 3 paremta antrosios strategijos pagrindu. Trečioji strategija yra spartesnė ir efektyvesnė dirbant su vektoriaus tipo konteineriais, tačiau susiduria su sunkumais dirbant su didesniais failais. Nepaisant to, Strategija 3 yra efektyviausia iš visų testuotų strategijų. 
 ```
 Studentų kategorizacijos strategijų testavimas buvo atliktas naudojant v1.0 realizaciją.
 ```
