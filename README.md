@@ -61,6 +61,8 @@ Versija v0.1 optimizuota ir papildyta funkcija leidžiančia naudotojui sugeneru
 Versija v0.2 optimizuota ir papildyta galimybe pasirinkti norimą naudoti konteinerį; programa papildyta funkcija leidžiančia įvestų studentų duomenis išvesti į terminalą bei pateikianti jų saugojimo atmintyje adresus; programa papildyta Meniu struktūra ir detalesniu pasirinkimu; Timer'is papildytas saugojimo bei visų laiko trukmių išvedimo funkcijomis; failų spartos analizės funkcija papildyta studentų kategorizacijos bei išvedimo į failus spartos apskaičiavimu.
 #### [v1.0](https://github.com/guscila/objektinis/tree/v1.0) pokyčiai:
 Versija v0.3 optimizuota ir papildyta funkcija leidžiančiau naudotojui pasirinkti norimą naudoti studentų kategorizacijos strategiją; parengta įdiegimo instrukcija su `CMakeLists.txt` ir `run.bat`.
+#### [v1.1](https://github.com/guscila/objektinis2/tree/v1.1) pokyčiai:
+Versija v1.0 optimizuota, o Studento struktūra pakeista Studento klase, ko pasekoje atlikti kodo pritaikymas klasėms.
 
 ## Programos failai
 ### Failai
@@ -107,6 +109,24 @@ CPU: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz (2.42 GHz) <br>
 RAM: 8.00 GB <br>
 HDD: SSD 238 GB <br>
 ## Greičio spartos analizė:
+### Studento struktūros ir klasės palyginimas:
+#### `struct` Studentas greičio spartos analizė:
+| Failas                 | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
+|:-----------------------|:--------------------|:------------------------|:------------------------------------|:-------------------------------------|:-----------------------------------------------|:-----------------------------------------------|
+| 100000studentu.txt     | 0,230 s             | 0,003 s                 | 0,013 s                             | 0,008 s                              | 0,218 s                                        | 0,160 s                                        |
+| 1000000studentu.txt    | 2,242 s             | 0,034 s                 | 0,276 s                             | 0,186 s                              | 3,723 s                                        | 1,824 s                                        |
+
+#### `class` Studentas greičio spartos analizė:
+| Failas                 | Duomenų nuskaitymas | Studentų kategorizacija | *'Kietiakų'<sup>1</sup>* rūšiavimas | *'Vargšiukų'<sup>2</sup>* rūšiavimas | Išvedimas į failą (*'Kietiakai'<sup>1</sup>*)  | Išvedimas į failą (*'Vargšiukai'<sup>2</sup>*) |
+|:-----------------------|:--------------------|:------------------------|:------------------------------------|:-------------------------------------|:-----------------------------------------------|:-----------------------------------------------|
+| 100000studentu.txt     | 0,248 s             | 0,006 s                 | 0,029 s                             | 0,021 s                              | 0,209 s                                        | 0,149 s                                        |
+| 1000000studentu.txt    | 2,417 s             | 0,081 s                 | 0,347 s                             | 0,240 s                              | 2,223 s                                        | 1,466 s                                        |
+```
+Studentų kategorizacijos strategijų testavimas buvo atliktas naudojant v1.0 realizaciją gauti struct Studentas duomenims, o v1.1 realizaciją - class Studentas duomenims.
+Abiejų testavimų atveju buvo naudota Strategija 3 bei vector tipo konteineris.
+```
+### Studentas struktūros ir klasės palyginimo išvados:
+`struct` tipas beveik visais aspektais yra greitesnis už `class` išskyrus duomenų išvedimo prasme.....
 ### Strategijos:
 * Strategija 1 - Bendro studentų konteinerio kategorizacija į du naujus konteinerius: *'Kietiakai'<sup>1</sup>* ir *'Vargšiukai'<sup>2</sup>*.
 * Strategija 2 - Bendro studentų konteinerio kategorizacija panaudojant tik vieną naują konteinerį: *'Vargšiukai'<sup>2</sup>*.
