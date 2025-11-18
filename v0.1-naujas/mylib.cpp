@@ -262,47 +262,31 @@ void FailuGeneravimas(string name) {    // studentų duomenų failų generavimo 
 template<typename cont>
 void StudentuKategorizacija(cont& grupe, cont& vargsiukai, cont& kietiakai, int strategija) {   // studentų kategorizacijos funkcija į Vargšiukus ir Kietiakus
     if (strategija == 1) {  // Strategija 1
-        for (auto temp : grupe) {   // studentų rūšiavimas į vargšiukus ir kietiakus
+        for (auto temp : grupe) {   // studentų rūšiavimas į "vargšiukus" ir "kietiakus"
             if (temp.rez < 5.0) {   // atrenkami "vargšiukai"
                 vargsiukai.push_back(temp);
             }
-            else if (temp.rez >= 5.0) { // atrenkami "kietiakai
+            else if (temp.rez >= 5.0) { // atrenkami "kietiakai"
                 kietiakai.push_back(temp);
             }
         }
     }
     else if (strategija == 2) { // Strategija 2
-        if constexpr (std::is_same_v<cont, std::list<Studentas>>) { // veiksmai su list konteineriu
-            for (auto it = grupe.begin(); it != grupe.end();) {
-                if (it->rez < 5.0) {    // atrenkami "vargšiukai"
-                    vargsiukai.push_back(*it);  // "vargšiukai" įrašomi į naują konteinerį
-                    it = grupe.erase(it); // "vargšiukai" pašalinami iš originalaus konteinerio
-                }
-                else it++;
+        auto it = grupe.begin();
+        while (it != grupe.end()) {
+            if (it->rez < 5.0) {    // atrenkami "vargšiukai"
+                vargsiukai.push_back(std::move(*it));   // "vargšiukai" perkeliami į naują konteinerį
+                *it = std::move(grupe.back());  //
+                grupe.pop_back();               // užpildoma buvusi "vargšiuko" vieta
             }
-        }
-        else {  // veiksmai su vector konteineriu
-            auto it = grupe.begin();
-            while (it != grupe.end()) {
-                if (it->rez < 5.0) {    // atrenkami "vargšiukai"
-                    vargsiukai.push_back(std::move(*it));   // "vargšiukai" perkeliami į naują konteinerį
-                    *it = std::move(grupe.back());  //
-                    grupe.pop_back();               // užpildoma buvusi "vargšiuko" vieta
-                }
-                else it++;
-            }
+            else it++;
         }
     }
     else if (strategija == 3) { // Strategija 3
         auto kietas = [](const Studentas& stud) { return stud.rez >= 5.0; };
         auto atskirtis = std::partition(grupe.begin(), grupe.end(), kietas);    // randama atskirtis tarp "kietiakų" konteinerio priekyje ir "vargšiukų" konteinerio gale
-        if constexpr (std::is_same_v<cont, std::list<Studentas>>) { // veiksmai su list konteineriu
-            vargsiukai.splice(vargsiukai.end(), grupe, atskirtis, grupe.end()); // "vargšiukai atskiriami į kitą konteinerį
-        }
-        else {  // veiksmai su vector konteineriu
-            vargsiukai.insert(vargsiukai.end(), std::make_move_iterator(atskirtis), std::make_move_iterator(grupe.end()));  // "vargšiukai" perkeliami į kitą konteinerį
-            grupe.erase(atskirtis, grupe.end());    // iš originalaus vektoriaus pašalinami visi "vargšiukai"
-        }
+        vargsiukai.insert(vargsiukai.end(), std::make_move_iterator(atskirtis), std::make_move_iterator(grupe.end()));  // "vargšiukai" perkeliami į kitą konteinerį
+        grupe.erase(atskirtis, grupe.end());    // iš originalaus konteinerio pašalinami visi "vargšiukai"
     }
 }
 
